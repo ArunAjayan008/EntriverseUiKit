@@ -1,7 +1,5 @@
 package me.arunajayan.entriverselibrary.theme.fonts
 
-import androidx.compose.material.LocalTextStyle
-import androidx.compose.material.Text
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,7 +17,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import me.arunajayan.entriverselibrary.R
-import me.entri.entrime.shared.R
 
 val interFamily = FontFamily(
     Font(R.font.inter_light, FontWeight.Light),
