@@ -70,6 +70,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation("com.github.ArunAjayan008:EntriverseUiKit:0.0.8")
 
-    implementation(project(":EntriverseLibrary"))
+//    implementation(project(":EntriverseLibrary"))
 }
