@@ -1,6 +1,20 @@
+buildscript {
+    extra["kotlin_version"] = "1.6.10"
+    repositories {
+        google()
+        mavenCentral()
+        mavenLocal()
+    }
+    dependencies {
+        classpath("com.android.tools.build:gradle:7.1.3")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10")
+    }
+}
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("maven-publish")
 }
 
 android {
@@ -35,6 +49,26 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.11"
+    }
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
+}
+
+publishing {
+    publications {
+        register<MavenPublication>("release") {
+            groupId = "com.github.ArunAjayan008"
+            artifactId = "EntriverseUiKit"
+            version = "0.0.4"
+
+            afterEvaluate {
+                from(components["release"])
+            }
+        }
     }
 }
 
