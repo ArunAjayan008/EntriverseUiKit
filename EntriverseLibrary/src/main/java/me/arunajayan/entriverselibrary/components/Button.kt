@@ -60,9 +60,9 @@ public fun EntriverseButton(
         ) {
             EntriverseText(
                 text = label,
-                fontSize = 14.sp,
                 modifier = Modifier.align(Alignment.CenterHorizontally),
-                color = Entriverse.colors.referenceColors.defaultIcon
+                color = Entriverse.colors.referenceColors.defaultIcon,
+                style = Entriverse.typography.buttonBold,
             )
         }
     }
