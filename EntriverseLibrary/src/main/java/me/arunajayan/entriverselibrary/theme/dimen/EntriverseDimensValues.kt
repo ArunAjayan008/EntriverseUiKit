@@ -1,6 +1,9 @@
 package me.arunajayan.entriverselibrary.theme.dimen
+
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 //
 //internal val EntriverseDimens = staticCompositionLocalOf {  }
@@ -10,12 +13,12 @@ import androidx.compose.ui.unit.dp
 //    public val fontDimens: FontDimens
 //) {
 
-//    @Immutable
-//    public data class FontDimens internal constructor(
-//        public val smallText: Dp = 12.dp
-//    )
+class EntriverseFontDimens internal constructor(
+    val text12sp: TextUnit = 12.sp,
+    val text14sp: TextUnit = 14.sp
+)
 
-public class EntriverseDimensValues internal constructor() {
+class EntriverseDimensValues internal constructor() {
     public val spacing0: Dp = 0.dp
     public val spacing50: Dp = 2.dp
     public val spacing100: Dp = 4.dp
