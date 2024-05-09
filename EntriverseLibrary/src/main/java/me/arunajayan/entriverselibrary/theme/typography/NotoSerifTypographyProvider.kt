@@ -68,7 +68,7 @@ public val notoSerifTypographyProvider: EntriverseTypographyProvider =
                 colors.referenceColors.primaryText
             ),
             display1 = notoSerifTextStyle(
-                55,
+                14,
                 96 * 1.00000000,
                 -0.01900000000,
                 500,

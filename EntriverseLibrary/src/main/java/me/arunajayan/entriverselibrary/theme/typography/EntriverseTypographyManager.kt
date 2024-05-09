@@ -7,7 +7,6 @@ import me.arunajayan.entriverselibrary.theme.colors.lightColors
 public object EntriverseTypographyManager{
 
     public fun provideTypography(provider: EntriverseTypographyProvider) {
-        if (::typographyProvider.isInitialized) return
         typographyProvider = provider
     }
 

@@ -1,22 +1,23 @@
 package me.arunajayan.entriverselibrary.components.button
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
@@ -26,36 +27,45 @@ import androidx.compose.ui.unit.dp
 import me.arunajayan.entriverselibrary.Entriverse
 import me.arunajayan.entriverselibrary.R
 import me.arunajayan.entriverselibrary.components.EntriverseText
+import me.arunajayan.entriverselibrary.components.button.ButtonColors.calcButtonColor
+import me.arunajayan.entriverselibrary.components.button.ButtonColors.calcButtonTextColor
+import me.arunajayan.entriverselibrary.components.button.ButtonColors.rippleColor
 
 @Composable
 fun EntriverseButton(
+    modifier: Modifier,
     onClick: () -> Unit,
     label: String,
     disabled: Boolean = false,
     type: ButtonType,
     size: ButtonSize,
     icon: Int? = null,
-    iconPosition: ButtonIconPosition? = null
-) {
+    iconPosition: ButtonIconPosition? = null,
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    ) {
     val paddings = remember { ButtonProperties() }
-    paddings.CalcButtonProperties(
+    paddings.FetchButtonProperties(
         hasStartIcon = !(icon == 0 || iconPosition != ButtonIconPosition.START),
         hasEndIcon = !(icon == 0 || iconPosition != ButtonIconPosition.END),
         size = size
     )
     val backgroundColor = calcButtonColor(type = type)
-    val buttonStyleModifier = ButtonStyleModifier(type)
+    val buttonStyleModifier = buttonStyleModifier(type,modifier)
     val buttonSizeModifier = calcButtonSize(size = size)
     val buttonTextColor=calcButtonTextColor(type)
+    val rippleColor = rippleColor(type)
     Box(
         modifier = buttonStyleModifier
             .wrapContentWidth()
             .layoutId("background")
             .background(color = backgroundColor, shape = RoundedCornerShape(120.dp))
+            .clip(shape = RoundedCornerShape(120.dp))
             .clickable(
                 onClick = onClick,
                 enabled = !disabled,
-                role = Role.Button
+                role = Role.Button,
+                interactionSource = interactionSource,
+                indication = rememberRipple(color = rippleColor)
             ),
     ) {
         Row(
@@ -107,40 +117,6 @@ fun EntriverseButton(
     }
 }
 
-@Composable
-fun ButtonStyleModifier(type: ButtonType): Modifier {
-    return if(type==ButtonType.OUTLINED){
-        Modifier.border(1.5.dp, Entriverse.colors.referenceColors.onBlueContainer, RoundedCornerShape(120.dp))
-    }
-     else Modifier
-}
-
-@Composable
-fun calcButtonColor(type: ButtonType) = when (type) {
-    ButtonType.FILLED -> Entriverse.colors.referenceColors.blueContainer
-    ButtonType.TONAL -> Entriverse.colors.referenceColors.onBlueContainer
-    ButtonType.OUTLINED -> Entriverse.palette.transparentColor
-    ButtonType.SECONDARY_OUTLINED -> Entriverse.colors.referenceColors.primaryText
-    ButtonType.DESTRUCTIVE -> Entriverse.colors.referenceColors.primaryText
-    ButtonType.SUCCESS -> Entriverse.colors.referenceColors.primaryText
-}
-
-@Composable
-fun calcButtonTextColor(type: ButtonType) = when (type) {
-    ButtonType.FILLED -> Entriverse.colors.referenceColors.fixedWhite
-    ButtonType.TONAL -> Entriverse.colors.referenceColors.onBlueContainer
-    ButtonType.OUTLINED -> Entriverse.colors.referenceColors.onBlueContainer
-    ButtonType.SECONDARY_OUTLINED -> Entriverse.colors.referenceColors.invertedText
-    ButtonType.DESTRUCTIVE -> Entriverse.colors.referenceColors.fixedWhite
-    ButtonType.SUCCESS -> Entriverse.colors.referenceColors.fixedWhite
-}
-
-@Composable
-fun calcButtonSize(size: ButtonSize) = when (size) {
-    ButtonSize.REGULAR -> Modifier.fillMaxWidth()
-    ButtonSize.SMALL -> Modifier.wrapContentWidth()
-    ButtonSize.EXTRA_SMALL -> Modifier.wrapContentWidth()
-}
 
 enum class ButtonIconPosition { START, END, }
 enum class ButtonType { FILLED, TONAL, OUTLINED, SECONDARY_OUTLINED, DESTRUCTIVE, SUCCESS }
@@ -150,6 +126,7 @@ enum class ButtonSize { REGULAR, SMALL, EXTRA_SMALL }
 @Composable
 private fun Test() {
     EntriverseButton(
+        modifier = Modifier,
         onClick = {},
         disabled = false,
         label = "Button Text",

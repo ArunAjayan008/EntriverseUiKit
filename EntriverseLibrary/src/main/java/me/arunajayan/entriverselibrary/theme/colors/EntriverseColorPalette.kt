@@ -128,4 +128,5 @@ public class EntriverseColorPalette internal constructor() {
     public val pureBlack: Color = Color(0xFF000000)
 
     val transparentColor = Color(0x00000000)
+    val fabColor = Color(0xFFFFE2B0)
 }

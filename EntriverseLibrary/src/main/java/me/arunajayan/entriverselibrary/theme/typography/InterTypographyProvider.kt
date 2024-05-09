@@ -71,7 +71,7 @@ public val interTypographyProvider: EntriverseTypographyProvider = EntriverseTyp
             12 * 1.00000000,
             -0.016000000,
             500,
-            colors.referenceColors.primaryText
+            colors.referenceColors.primaryContainer
         ),
         buttonDefault = interTextStyle(
             14,

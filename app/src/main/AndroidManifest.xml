@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
-        android:name=".MyApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -17,7 +16,7 @@
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/title_activity_main2"
-            android:theme="@style/Theme.EntriverseUI" >
+            android:theme="@style/Theme.EntriverseUI">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

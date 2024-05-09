@@ -1,7 +1,6 @@
 package me.arunajayan.entriverseui
 
 import android.content.Context
-import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -30,24 +29,36 @@ import me.arunajayan.entriverselibrary.Entriverse
 import me.arunajayan.entriverselibrary.components.button.ButtonType
 import me.arunajayan.entriverselibrary.components.button.EntriverseButton
 import me.arunajayan.entriverselibrary.components.EntriverseText
+import me.arunajayan.entriverselibrary.components.button.ButtonIconPosition
+import me.arunajayan.entriverselibrary.components.button.ButtonSize
+import me.arunajayan.entriverselibrary.components.extendedFab.EntriverseExtendedFAB
+import me.arunajayan.entriverselibrary.components.textInput.EntriverseTextInputField
 import me.arunajayan.entriverselibrary.theme.EntriverseTheme
+import me.arunajayan.entriverselibrary.theme.UserLocale
 import java.util.Locale
 
 class MainActivity : ComponentActivity() {
+    private var lang: UserLocale = UserLocale.EN
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setLocale(this, lang)
         enableEdgeToEdge()
         setContent {
-            SetAppTheme(onClick = {
-                setLocale(this, "ml")
-                startActivity(Intent(this, MainActivity::class.java))
+            SetAppTheme(userLocale = lang, onClick = {
+                if (lang == UserLocale.EN) {
+                    setLocale(this, UserLocale.ML)
+                    lang = UserLocale.ML
+                } else {
+                    setLocale(this, UserLocale.EN)
+                    lang = UserLocale.EN
+                }
             })
         }
     }
 }
 
-fun setLocale(context: Context, languageCode: String) {
-    val locale = Locale(languageCode)
+fun setLocale(context: Context, languageCode: UserLocale) {
+    val locale = Locale(languageCode.toString())
     Locale.setDefault(locale)
     val configuration = Configuration(context.resources.configuration)
     configuration.setLocale(locale)
@@ -55,11 +66,22 @@ fun setLocale(context: Context, languageCode: String) {
 }
 
 @Composable
-fun SetAppTheme(onClick: () -> Unit) {
-    var darkTheme by remember { mutableStateOf(true) }
+fun SetAppTheme(onClick: () -> Unit, userLocale: UserLocale) {
+    var darkTheme by remember { mutableStateOf(false) }
+    var locale by remember {
+        mutableStateOf(userLocale)
+    }
 
-    EntriverseTheme(darkTheme = darkTheme) {
-        Surface {
+    fun setLangVal() {
+        locale = if (locale == UserLocale.EN) {
+            UserLocale.ML
+        } else {
+            UserLocale.EN
+        }
+    }
+
+    EntriverseTheme(darkTheme = darkTheme, userLocale = locale) {
+        Surface(modifier = Modifier.fillMaxSize()) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -67,9 +89,14 @@ fun SetAppTheme(onClick: () -> Unit) {
                     .padding(top = 120.dp)
             ) {
                 Greeting(
-                    onClick =
-//                    darkTheme = !darkTheme
-                    onClick
+                    onClickTheme = {
+                        darkTheme = !darkTheme
+//                        onClick()
+                    },
+                    onClickLanguage = {
+                        setLangVal()
+                        onClick()
+                    }
                 )
             }
         }
@@ -77,8 +104,8 @@ fun SetAppTheme(onClick: () -> Unit) {
 }
 
 @Composable
-fun Greeting(onClick: () -> Unit) {
-    Column {
+fun Greeting(onClickTheme: () -> Unit, onClickLanguage: () -> Unit) {
+    Column(modifier = Modifier.padding(20.dp), horizontalAlignment = Alignment.CenterHorizontally) {
         EntriverseText(
             text = stringResource(R.string.infoText),
             modifier = Modifier.align(Alignment.CenterHorizontally),
@@ -88,10 +115,45 @@ fun Greeting(onClick: () -> Unit) {
         )
         Spacer(modifier = Modifier.height(50.dp))
         EntriverseButton(
-            onClick = onClick,
-            label = stringResource(R.string.are_you_sure),
-            fillMaxWidth = false,
-            type = ButtonType.FILLED
+            modifier = Modifier,
+            onClick = onClickTheme,
+            disabled = false,
+            label = stringResource(R.string.change_theme),
+            type = ButtonType.FILLED,
+            size = ButtonSize.REGULAR,
+            icon = me.arunajayan.entriverselibrary.R.drawable.button_icon,
+            iconPosition = ButtonIconPosition.START
+        )
+        Spacer(modifier = Modifier.height(50.dp))
+        EntriverseExtendedFAB(
+            modifier = Modifier,
+            onClick = onClickLanguage,
+            label = stringResource(R.string.change_locale),
+            expanded = true,
+            icon = me.arunajayan.entriverselibrary.R.drawable.button_icon,
+            buttonColor = Entriverse.palette.fabColor,
+            textColor = Entriverse.palette.brown800
+        )
+        Spacer(modifier = Modifier.height(50.dp))
+        EntriverseTextInputField(
+            modifier = Modifier,
+            onClick = { },
+            textColor = Entriverse.colors.referenceColors.placeholderText,
+            leadingIcon = me.arunajayan.entriverselibrary.R.drawable.button_icon,
+            supportingText = stringResource(R.string.enter_name),
+            clearInputEnabled = true,
+            label = stringResource(id = R.string.full_name)
+        )
+
+        EntriverseTextInputField(
+            modifier = Modifier,
+            onClick = { },
+            textColor = Entriverse.colors.referenceColors.placeholderText,
+            leadingIcon = me.arunajayan.entriverselibrary.R.drawable.button_icon,
+            supportingText = "Enter name",
+            clearInputEnabled = false,
+            validateState = false,
+            label = stringResource(id = R.string.full_name)
         )
     }
 }
@@ -112,7 +174,7 @@ fun GreetingPreview() {
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            Greeting(onClick = {})
+            Greeting(onClickTheme = {}, onClickLanguage = {})
         }
     }
 }

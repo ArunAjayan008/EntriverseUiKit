@@ -31,9 +31,8 @@ public fun EntriverseTheme(
 
     EntriverseTypographyManager.provideTypography(localeTypography)
     val typography = runCatching {
-        EntriverseTypographyManager.typographyProvider(Entriverse.colors)
+        EntriverseTypographyManager.typographyProvider(colors)
     }.getOrElse { error(NO_TYPOGRAPHY_PROVIDER) }
-
     MaterialTheme {
         ProvideEntriverseColors(colors) {
             CompositionLocalProvider(

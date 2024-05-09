@@ -1,9 +1,12 @@
 package me.arunajayan.entriverselibrary.components
 
+import android.text.SpannableStringBuilder
 import androidx.compose.foundation.text.BasicText
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -47,7 +50,17 @@ public fun EntriverseText(
             letterSpacing = letterSpacing
         )
     )
-    BasicText(
-        text, modifier, textStyle,onTextLayout, overflow, softWrap, maxLines
+//    BasicText(
+//
+//    )
+    Text(
+        text = text,
+        modifier = modifier,
+        overflow = overflow,
+        softWrap = softWrap,
+        maxLines = maxLines,
+        textAlign=textAlign,
+        onTextLayout=onTextLayout,
+        style=textStyle
     )
 }
