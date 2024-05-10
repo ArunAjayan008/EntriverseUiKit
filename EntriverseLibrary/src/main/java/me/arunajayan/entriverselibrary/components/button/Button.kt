@@ -130,8 +130,8 @@ private fun Test() {
         onClick = {},
         disabled = false,
         label = "Button Text",
-        type = ButtonType.FILLED,
-        size = ButtonSize.SMALL,
+        type = ButtonType.SECONDARY_OUTLINED,
+        size = ButtonSize.REGULAR,
         icon = R.drawable.button_icon,
         iconPosition = ButtonIconPosition.START
     )

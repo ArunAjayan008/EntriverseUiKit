@@ -95,7 +95,9 @@ fun calcButtonSize(size: ButtonSize) = when (size) {
 @Composable
 fun buttonStyleModifier(type: ButtonType,modifier: Modifier): Modifier {
     return if(type==ButtonType.OUTLINED){
-        modifier.border(1.5.dp, Entriverse.colors.referenceColors.onBlueContainer, RoundedCornerShape(120.dp))
+        modifier.border(1.5.dp, Entriverse.colors.referenceColors.onBlue, RoundedCornerShape(120.dp))
+    }else if(type==ButtonType.SECONDARY_OUTLINED){
+        modifier.border(1.5.dp, Entriverse.colors.referenceColors.disabledText, RoundedCornerShape(120.dp))
     }
     else modifier
 }

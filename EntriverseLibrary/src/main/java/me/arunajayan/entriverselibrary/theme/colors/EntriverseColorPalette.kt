@@ -34,6 +34,8 @@ public class EntriverseColorPalette internal constructor() {
     public val purple500: Color = Color(0xFF7F3E98)
     public val purple600: Color = Color(0xFF74388A)
     public val purple700: Color = Color(0xFF5A2C6C)
+    public val purple800: Color = Color(0xFF462254)
+    public val purple900: Color = Color(0xFF2e1567)
 
     public val orange50: Color = Color(0xFFFFF6E6)
     public val orange100: Color = Color(0xFFFFE2B0)

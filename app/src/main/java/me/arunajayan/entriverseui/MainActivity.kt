@@ -91,7 +91,6 @@ fun SetAppTheme(onClick: () -> Unit, userLocale: UserLocale) {
                 Greeting(
                     onClickTheme = {
                         darkTheme = !darkTheme
-//                        onClick()
                     },
                     onClickLanguage = {
                         setLangVal()
@@ -119,7 +118,7 @@ fun Greeting(onClickTheme: () -> Unit, onClickLanguage: () -> Unit) {
             onClick = onClickTheme,
             disabled = false,
             label = stringResource(R.string.change_theme),
-            type = ButtonType.FILLED,
+            type = ButtonType.SECONDARY_OUTLINED,
             size = ButtonSize.REGULAR,
             icon = me.arunajayan.entriverselibrary.R.drawable.button_icon,
             iconPosition = ButtonIconPosition.START
@@ -139,31 +138,36 @@ fun Greeting(onClickTheme: () -> Unit, onClickLanguage: () -> Unit) {
             modifier = Modifier,
             onClick = { },
             textColor = Entriverse.colors.referenceColors.placeholderText,
-            leadingIcon = me.arunajayan.entriverselibrary.R.drawable.button_icon,
+            leadingIcon = me.arunajayan.entriverselibrary.R.drawable.entriverse_ic_search,
             supportingText = stringResource(R.string.enter_name),
             clearInputEnabled = true,
-            label = stringResource(id = R.string.full_name)
+            label = stringResource(id = R.string.full_name),
+            onValueChange = {}
         )
-
+        var stateVal  by remember {
+            mutableStateOf(
+                true
+            )
+        }
+        fun checkstate(state:String){
+            if(state.length>3){
+                stateVal=false
+            }
+        }
         EntriverseTextInputField(
             modifier = Modifier,
             onClick = { },
             textColor = Entriverse.colors.referenceColors.placeholderText,
-            leadingIcon = me.arunajayan.entriverselibrary.R.drawable.button_icon,
+            leadingIcon = me.arunajayan.entriverselibrary.R.drawable.entriverse_ic_search,
             supportingText = "Enter name",
-            clearInputEnabled = false,
-            validateState = false,
-            label = stringResource(id = R.string.full_name)
+            clearInputEnabled = true,
+            validateState = stateVal,
+            label = stringResource(id = R.string.full_name),
+            onValueChange = {
+                checkstate(it)
+            }
         )
     }
-}
-
-fun setAppLang(context: Context) {
-    val locale = Locale("ml")
-    Locale.setDefault(locale)
-    val config = context.resources.configuration
-    config.setLocale(locale)
-    context.createConfigurationContext(config)
 }
 
 @Preview(showSystemUi = true)

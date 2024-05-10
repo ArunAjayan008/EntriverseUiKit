@@ -18,8 +18,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -32,6 +34,7 @@ import me.arunajayan.entriverselibrary.theme.fonts.InterNormal
 fun EntriverseTextInputField(
     modifier: Modifier,
     onClick: () -> Unit,
+    onValueChange:(String)->Unit,
     leadingIcon: Int? = null,
     leadingIconSize: Dp? = null,
     clearInputEnabled: Boolean = false,
@@ -47,16 +50,36 @@ fun EntriverseTextInputField(
             inputValue
         )
     }
+    var focusedState by remember {
+        mutableStateOf(false)
+    }
+
+    val defaultText = Entriverse.colors.referenceColors.placeholderText
+    var borderColor:Color by remember {
+        mutableStateOf(defaultText)
+    }
+
+    borderColor = if (validateState == false) {
+        Entriverse.colors.referenceColors.errorHover
+    } else {
+        Entriverse.colors.referenceColors.placeholderText
+    }
 
     OutlinedTextField(
         value = inputValue?:"",
-        onValueChange = { inputValue = it },
+        onValueChange = {
+            inputValue = it
+            onValueChange(it)
+        },
         modifier = modifier
             .fillMaxWidth()
             .background(
                 color = Color.Unspecified,
                 RoundedCornerShape(Entriverse.entriverseDimens.referenceDimens.spacingS)
-            ),
+            )
+            .onFocusChanged {
+                focusedState = it.isFocused
+            },
         enabled = true,
         label = {
             label?.let {
@@ -87,7 +110,7 @@ fun EntriverseTextInputField(
             }
         },
         trailingIcon = {
-            if (clearInputEnabled && inputValue?.isNotEmpty() == true) {
+            if (clearInputEnabled && inputValue?.isNotEmpty() == true && validateState==null) {
                 Icon(
                     painter = painterResource(id = R.drawable.entriverse_close_icon),
                     modifier = Modifier
@@ -99,7 +122,7 @@ fun EntriverseTextInputField(
                     tint = Entriverse.colors.referenceColors.secondaryIcon
                 )
             }
-            if(validateState != null){
+            if(validateState !=null){
                 val icon =
                     if (validateState)
                         R.drawable.button_icon
@@ -127,12 +150,14 @@ fun EntriverseTextInputField(
         singleLine = true,
         colors = OutlinedTextFieldDefaults.colors(
             focusedBorderColor = Entriverse.colors.referenceColors.blueIcon,
-            focusedTextColor = Entriverse.colors.referenceColors.primaryContainer,
+            unfocusedBorderColor = borderColor,
+            focusedTextColor =    Entriverse.colors.referenceColors.invertedText,
             unfocusedLabelColor = Entriverse.colors.referenceColors.placeholderText,
             focusedLabelColor = Entriverse.colors.referenceColors.entriBlue,
             disabledTextColor = Entriverse.colors.referenceColors.disabledText
         )
     )
+
 }
 
 
@@ -149,12 +174,12 @@ fun OutlineTextPreview() {
             modifier = Modifier,
             onClick = { },
             textColor = Entriverse.colors.referenceColors.placeholderText,
-            leadingIcon = R.drawable.button_icon,
-            placeHolderText = "Hlo",
+            leadingIcon = R.drawable.entriverse_ic_search,
             supportingText = "Enter name",
             clearInputEnabled = false,
-            inputValue = "Hi",
-            validateState = if(input.length>3)true else false
+            validateState = false,
+            label = "dflksdjfl",
+            onValueChange = {}
         )
     }
 }
