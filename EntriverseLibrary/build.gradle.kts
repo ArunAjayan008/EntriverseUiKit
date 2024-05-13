@@ -1,3 +1,10 @@
+plugins {
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.kotlin.multiplatform)
+    id("maven-publish")
+}
+
 buildscript {
     extra["kotlin_version"] = "1.6.10"
     repositories {
@@ -9,12 +16,6 @@ buildscript {
         classpath("com.android.tools.build:gradle:7.1.3")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10")
     }
-}
-
-plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.jetbrains.kotlin.android)
-    id("maven-publish")
 }
 
 android {
@@ -89,7 +90,6 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.activity:activity-compose:1.8.2")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
-    // Optional - Integration with RxJava
     implementation("androidx.compose.runtime:runtime-rxjava2")
 
     testImplementation(libs.junit)
