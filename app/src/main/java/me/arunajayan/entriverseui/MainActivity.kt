@@ -25,16 +25,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import me.arunajayan.entriverselibrary.Entriverse
-import me.arunajayan.entriverselibrary.components.button.ButtonType
-import me.arunajayan.entriverselibrary.components.button.EntriverseButton
-import me.arunajayan.entriverselibrary.components.EntriverseText
-import me.arunajayan.entriverselibrary.components.button.ButtonIconPosition
-import me.arunajayan.entriverselibrary.components.button.ButtonSize
-import me.arunajayan.entriverselibrary.components.extendedFab.EntriverseExtendedFAB
-import me.arunajayan.entriverselibrary.components.textInput.EntriverseTextInputField
-import me.arunajayan.entriverselibrary.theme.EntriverseTheme
-import me.arunajayan.entriverselibrary.theme.UserLocale
+import entriverse.shared.Entriverse
+import entriverse.shared.components.EntriverseText
+import entriverse.shared.components.button.ButtonIconPosition
+import entriverse.shared.components.button.ButtonSize
+import entriverse.shared.components.button.ButtonType
+import entriverse.shared.components.button.EntriverseButton
+import entriverse.shared.components.extendedFab.EntriverseExtendedFAB
+import entriverse.shared.components.textInput.EntriverseTextInputField
+import entriverse.shared.theme.EntriverseTheme
+import entriverse.shared.theme.UserLocale
 import java.util.Locale
 
 class MainActivity : ComponentActivity() {
@@ -119,7 +119,7 @@ fun Greeting(onClickTheme: () -> Unit, onClickLanguage: () -> Unit) {
             disabled = false,
             label = stringResource(R.string.change_theme),
             type = ButtonType.FILLED,
-            size = ButtonSize.SMALL,
+            size = ButtonSize.REGULAR,
             icon = me.arunajayan.entriverselibrary.R.drawable.button_icon,
             iconPosition = ButtonIconPosition.START
         )
