@@ -1,18 +1,13 @@
+
 plugins {
-    alias(libs.plugins.android.application)
+    id("com.android.application")
     alias(libs.plugins.jetbrains.kotlin.android)
-//    alias(libs.plugins.kotlin.multiplatform)
 }
 
 android {
     namespace = "me.arunajayan.entriverseui"
     compileSdk = 34
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.11"
-    }
+
     defaultConfig {
         applicationId = "me.arunajayan.entriverseui"
         minSdk = 24
@@ -46,6 +41,12 @@ android {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
+    }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.11"
     }
 }
 

@@ -9,6 +9,9 @@ pluginManagement {
         }
         mavenCentral()
         gradlePluginPortal()
+        ivy {
+            url = uri("https://my.ivy.repo/repo")
+        }
     }
 }
 dependencyResolutionManagement {
@@ -17,6 +20,9 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven("https://jitpack.io")
+        ivy {
+            url = uri("https://my.ivy.repo/repo")
+        }
     }
 }
 
