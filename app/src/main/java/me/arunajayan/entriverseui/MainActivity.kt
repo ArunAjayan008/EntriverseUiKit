@@ -118,8 +118,8 @@ fun Greeting(onClickTheme: () -> Unit, onClickLanguage: () -> Unit) {
             onClick = onClickTheme,
             disabled = false,
             label = stringResource(R.string.change_theme),
-            type = ButtonType.SECONDARY_OUTLINED,
-            size = ButtonSize.REGULAR,
+            type = ButtonType.FILLED,
+            size = ButtonSize.SMALL,
             icon = me.arunajayan.entriverselibrary.R.drawable.button_icon,
             iconPosition = ButtonIconPosition.START
         )
