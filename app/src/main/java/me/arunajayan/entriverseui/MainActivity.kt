@@ -7,6 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -26,13 +27,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import entriverse.shared.Entriverse
-import entriverse.shared.components.EntriverseText
+import entriverse.shared.components.EvText
 import entriverse.shared.components.button.ButtonIconPosition
 import entriverse.shared.components.button.ButtonSize
 import entriverse.shared.components.button.ButtonType
-import entriverse.shared.components.button.EntriverseButton
-import entriverse.shared.components.extendedFab.EntriverseExtendedFAB
-import entriverse.shared.components.textInput.EntriverseTextInputField
+import entriverse.shared.components.button.EvButton
+import entriverse.shared.components.extendedFab.EvExtendedFAB
+import entriverse.shared.components.textInput.EvTextInputField
 import entriverse.shared.theme.EntriverseTheme
 import entriverse.shared.theme.UserLocale
 import java.util.Locale
@@ -67,7 +68,8 @@ fun setLocale(context: Context, languageCode: UserLocale) {
 
 @Composable
 fun SetAppTheme(onClick: () -> Unit, userLocale: UserLocale) {
-    var darkTheme by remember { mutableStateOf(false) }
+    val isDarkTheme = isSystemInDarkTheme()
+    var darkTheme by remember { mutableStateOf(isDarkTheme) }
     var locale by remember {
         mutableStateOf(userLocale)
     }
@@ -105,7 +107,7 @@ fun SetAppTheme(onClick: () -> Unit, userLocale: UserLocale) {
 @Composable
 fun Greeting(onClickTheme: () -> Unit, onClickLanguage: () -> Unit) {
     Column(modifier = Modifier.padding(20.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-        EntriverseText(
+        EvText(
             text = stringResource(R.string.infoText),
             modifier = Modifier.align(Alignment.CenterHorizontally),
             color = Entriverse.colors.referenceColors.backgroundDefault,
@@ -113,59 +115,79 @@ fun Greeting(onClickTheme: () -> Unit, onClickLanguage: () -> Unit) {
             fontSize = 20.sp
         )
         Spacer(modifier = Modifier.height(50.dp))
-        EntriverseButton(
+        EvButton(
             modifier = Modifier,
             onClick = onClickTheme,
             disabled = false,
             label = stringResource(R.string.change_theme),
             type = ButtonType.FILLED,
             size = ButtonSize.REGULAR,
-            icon = me.arunajayan.entriverselibrary.R.drawable.button_icon,
+            icon = me.arunajayan.entriverselibrary.R.drawable.ev_button_icon,
             iconPosition = ButtonIconPosition.START
         )
         Spacer(modifier = Modifier.height(50.dp))
-        EntriverseExtendedFAB(
+        EvExtendedFAB(
             modifier = Modifier,
             onClick = onClickLanguage,
             label = stringResource(R.string.change_locale),
             expanded = true,
-            icon = me.arunajayan.entriverselibrary.R.drawable.button_icon,
+            icon = me.arunajayan.entriverselibrary.R.drawable.ev_button_icon,
             buttonColor = Entriverse.palette.fabColor,
             textColor = Entriverse.palette.brown800
         )
         Spacer(modifier = Modifier.height(50.dp))
-        EntriverseTextInputField(
+        EvButton(
             modifier = Modifier,
-            onClick = { },
-            textColor = Entriverse.colors.referenceColors.placeholderText,
-            leadingIcon = me.arunajayan.entriverselibrary.R.drawable.entriverse_ic_search,
-            supportingText = stringResource(R.string.enter_name),
-            clearInputEnabled = true,
-            label = stringResource(id = R.string.full_name),
-            onValueChange = {}
+            onClick = {},
+            disabled = false,
+            label = stringResource(R.string.change_theme),
+            type = ButtonType.TONAL,
+            size = ButtonSize.SMALL,
+            icon = me.arunajayan.entriverselibrary.R.drawable.ev_button_icon,
+            iconPosition = ButtonIconPosition.START
         )
-        var stateVal  by remember {
+        var stateVal: Boolean? by remember {
+            mutableStateOf(null)
+        }
+        var validation: Boolean? by remember {
+            mutableStateOf(null)
+        }
+        var emailIdText by remember {
             mutableStateOf(
-                true
+                ""
             )
         }
-        fun checkstate(state:String){
-            if(state.length>3){
-                stateVal=false
-            }
+
+        fun checkEmailValidation() {
+            val emailRegex = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+".toRegex()
+            if (emailIdText.matches(emailRegex))
+                validation = true
+            else
+                validation = false
         }
-        EntriverseTextInputField(
+
+        fun saveEmail(email: String) {
+            emailIdText = email
+        }
+
+        EvTextInputField(
             modifier = Modifier,
             onClick = { },
             textColor = Entriverse.colors.referenceColors.placeholderText,
-            leadingIcon = me.arunajayan.entriverselibrary.R.drawable.entriverse_ic_search,
-            supportingText = "Enter name",
+            leadingIcon = me.arunajayan.entriverselibrary.R.drawable.ev_ic_search,
+            supportingText = when (validation) {
+                false -> "Input email address"
+                else -> ""
+            },
+            supportingTextColor = Entriverse.palette.red300,
             clearInputEnabled = true,
-            validateState = stateVal,
-            label = stringResource(id = R.string.full_name),
+            validateState = validation,
+            label = stringResource(id = R.string.email),
             onValueChange = {
-                checkstate(it)
-            }
+                saveEmail(it)
+                checkEmailValidation()
+            },
+            characterLimit = 5
         )
     }
 }

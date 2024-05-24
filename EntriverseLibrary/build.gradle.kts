@@ -87,3 +87,6 @@ android {
         }
     }
 }
+dependencies {
+    debugImplementation(libs.androidx.compose.ui.ui.tooling)
+}

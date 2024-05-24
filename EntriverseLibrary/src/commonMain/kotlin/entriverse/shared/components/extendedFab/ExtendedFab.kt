@@ -15,11 +15,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import entriverse.shared.Entriverse
-import entriverse.shared.components.EntriverseText
+import entriverse.shared.components.EvText
 import me.arunajayan.entriverselibrary.R
 
 @Composable
-fun EntriverseExtendedFAB(
+fun EvExtendedFAB(
     modifier: Modifier,
     onClick: () -> Unit,
     label: String,
@@ -95,7 +95,7 @@ fun EntriverseExtendedFAB(
             )
         },
         text = {
-            EntriverseText(
+            EvText(
                 text = label,
                 color = textColor,
                 style = Entriverse.typography.buttonBold,
@@ -156,12 +156,12 @@ fun EntriverseExtendedFAB(
 @Composable
 private fun Test() {
     Column(modifier = Modifier.fillMaxSize()) {
-        EntriverseExtendedFAB(
+        EvExtendedFAB(
             modifier = Modifier,
             onClick = {},
             label = "Ask Eva",
             expanded = true,
-            icon = R.drawable.button_icon,
+            icon = R.drawable.ev_button_icon,
             buttonColor = Entriverse.palette.fabColor,
             textColor = Entriverse.palette.brown800
         )

@@ -4,6 +4,6 @@
     <string name="are_you_sure">നിങ്ങൾക്ക് ഉറപ്പാണോ</string>
     <string name="change_theme">തീം മാറ്റുക</string>
     <string name="change_locale">ഇംഗ്ലീഷിലേക്ക് മാറുക</string>
-    <string name="full_name">പൂർണ്ണമായ പേര്</string>
+    <string name="email">ഇമെയിൽ</string>
     <string name="enter_name">പേര് നൽകുക</string>
 </resources>

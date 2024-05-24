@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.TextUnit
 
 
 @Composable
- fun EntriverseText(
+ fun EvText(
     text: String,
     modifier: Modifier = Modifier,
     color: Color = Color.Unspecified,
@@ -47,9 +47,6 @@ import androidx.compose.ui.unit.TextUnit
             letterSpacing = letterSpacing
         )
     )
-//    BasicText(
-//
-//    )
     Text(
         text = text,
         modifier = modifier,

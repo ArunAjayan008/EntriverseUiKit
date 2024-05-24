@@ -4,7 +4,10 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ripple.RippleAlpha
+import androidx.compose.material.ripple.RippleTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -83,21 +86,22 @@ internal class ButtonProperties {
     }
 }
 
-
 @Composable
-fun calcButtonSize(size: ButtonSize) = when (size) {
-    ButtonSize.REGULAR -> Modifier.fillMaxWidth()
-    ButtonSize.SMALL -> Modifier.wrapContentWidth()
-    ButtonSize.EXTRA_SMALL -> Modifier.wrapContentWidth()
-}
+fun Modifier.calcButtonSize(size: ButtonSize) =
+    this.then(
+        when (size) {
+            ButtonSize.REGULAR -> Modifier.fillMaxWidth()
+            ButtonSize.SMALL -> Modifier.wrapContentWidth()
+            ButtonSize.EXTRA_SMALL -> Modifier.wrapContentWidth()
+        }
+    )
 
 
-@Composable
-fun buttonStyleModifier(type: ButtonType,modifier: Modifier): Modifier {
-    return if(type==ButtonType.OUTLINED){
-        modifier.border(1.5.dp, Entriverse.colors.referenceColors.onBlue, RoundedCornerShape(120.dp))
-    }else if(type==ButtonType.SECONDARY_OUTLINED){
-        modifier.border(1.5.dp,Entriverse.colors.referenceColors.disabledText, RoundedCornerShape(120.dp))
-    }
-    else modifier
+@Immutable
+object RedRipple : RippleTheme {
+    @Composable
+    override fun defaultColor() = Entriverse.palette.red900
+
+    @Composable
+    override fun rippleAlpha(): RippleAlpha = RippleAlpha(1f, 1f, 1f, 1f)
 }

@@ -1,10 +1,10 @@
 <resources>
-    <string name="app_name">Entriverse UI</string>
-    <string name="title_activity_main2">MainActivity2</string>
+    <string name="app_name" translatable="false">Entriverse UI</string>
+    <string name="title_activity_main2" translatable="false">MainActivity2</string>
     <string name="infoText">Press the button</string>
     <string name="are_you_sure">Are you sure</string>
     <string name="change_theme">Change Theme</string>
     <string name="change_locale">Switch to Malayalam</string>
-    <string name="full_name">Full Name</string>
+    <string name="email">Email</string>
     <string name="enter_name">Enter name</string>
 </resources>
