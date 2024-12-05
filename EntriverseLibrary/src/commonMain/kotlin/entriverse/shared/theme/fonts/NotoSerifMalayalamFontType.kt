@@ -18,9 +18,18 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import me.arunajayan.entriverselibrary.R
 
-val notoSerifFamily = FontFamily(
+val notoSerifMalayalamFamily = FontFamily(
+    Font(R.font.noto_serif_malayalam_regular, FontWeight.Normal),
+    Font(R.font.noto_serif_malayalam_regular, FontWeight.Medium),
     Font(R.font.noto_serif_malayalam_semibold, FontWeight.SemiBold),
-    Font(R.font.noto_serif_malayalam_regular, FontWeight.Normal)
+    Font(R.font.noto_serif_malayalam_semibold, FontWeight.Bold),
+)
+
+val notoSerifRegularFamily = FontFamily(
+    Font(R.font.noto_serif_regular, FontWeight.Normal),
+    Font(R.font.noto_serif_regular, FontWeight.Medium),
+    Font(R.font.noto_serif_regular, FontWeight.SemiBold),
+    Font(R.font.noto_serif_regular, FontWeight.Bold)
 )
 
 @Composable
@@ -48,7 +57,7 @@ fun NotoSerifMalayalamNormal(
         fontSize = fontSize,
         fontStyle = fontStyle,
         fontWeight = FontWeight.Normal,
-        fontFamily = notoSerifFamily,
+        fontFamily = notoSerifMalayalamFamily,
         letterSpacing = letterSpacing,
         textDecoration = textDecoration,
         textAlign = textAlign,
@@ -87,7 +96,7 @@ fun NotoSerifMalayalamSemiBold(
         fontSize = fontSize,
         fontStyle = fontStyle,
         fontWeight = FontWeight.SemiBold,
-        fontFamily = notoSerifFamily,
+        fontFamily = notoSerifMalayalamFamily,
         letterSpacing = letterSpacing,
         textDecoration = textDecoration,
         textAlign = textAlign,

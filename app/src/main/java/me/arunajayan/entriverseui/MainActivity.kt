@@ -111,7 +111,7 @@ fun Greeting(onClickTheme: () -> Unit, onClickLanguage: () -> Unit) {
             text = stringResource(R.string.infoText),
             modifier = Modifier.align(Alignment.CenterHorizontally),
             color = Entriverse.colors.referenceColors.backgroundDefault,
-            style = Entriverse.typography.buttonDefault,
+            style = Entriverse.typography.buttonText,
             fontSize = 20.sp
         )
         Spacer(modifier = Modifier.height(50.dp))

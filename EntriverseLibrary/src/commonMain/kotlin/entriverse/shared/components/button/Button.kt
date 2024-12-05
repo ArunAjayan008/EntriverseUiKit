@@ -1,5 +1,6 @@
 package entriverse.shared.components.button
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.indication
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -15,6 +16,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ripple.LocalRippleTheme
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
@@ -34,6 +36,7 @@ import entriverse.shared.Entriverse
 import entriverse.shared.components.EvText
 import entriverse.shared.components.button.ButtonColors.buttonStyleModifier
 import entriverse.shared.components.button.ButtonColors.calcButtonTextColor
+import entriverse.shared.theme.utils.CustomRippleTheme
 
 @Composable
 fun EvButton(
@@ -57,38 +60,37 @@ fun EvButton(
     val interactionSource = remember { MutableInteractionSource() }
     val buttonTextColor = calcButtonTextColor(type)
 
-    CompositionLocalProvider(LocalRippleTheme provides RedRipple) {
+    CompositionLocalProvider(LocalRippleTheme provides CustomRippleTheme) {
         Box(
             modifier = Modifier
                 .clip(shape = RoundedCornerShape(120.dp))
                 .wrapContentWidth()
                 .layoutId("background")
-                .indication(
-                    interactionSource = interactionSource,
-                    rememberRipple(
-                        bounded = true,
-                        color = Entriverse.palette.red900
-                    )
+                .clickable(
+                    indication = rememberRipple(),
+                    interactionSource = remember { interactionSource },
+                    enabled = true,
+                    onClick = onClick
                 )
-                .pointerInput(Unit) {
-                    detectTapGestures(
-                        onPress = { offset ->
-                            val press = PressInteraction.Press(offset)
-                            interactionSource.emit(press)
-                            buttonState = ButtonState.PRESSED
-                            onClick()
-                            try {
-                                println("Arun button pressed")
-                                awaitRelease()
-                                interactionSource.emit(PressInteraction.Release(press))
-                                buttonState = ButtonState.DEFAULT
-                            } catch (e: Exception) {
-                                println("Arun exception")
-                                buttonState = ButtonState.DEFAULT
-                            }
-                        },
-                    )
-                }
+//                .pointerInput(Unit) {
+//                    detectTapGestures(
+//                        onPress = { offset ->
+//                            val press = PressInteraction.Press(offset)
+//                            interactionSource.emit(press)
+//                            buttonState = ButtonState.PRESSED
+//                            onClick()
+//                            try {
+//                                println("Arun button pressed")
+//                                awaitRelease()
+//                                interactionSource.emit(PressInteraction.Release(press))
+//                                buttonState = ButtonState.DEFAULT
+//                            } catch (e: Exception) {
+//                                println("Arun exception")
+//                                buttonState = ButtonState.DEFAULT
+//                            }
+//                        },
+//                    )
+//                }
                 .buttonStyleModifier(type, modifier, state = buttonState)
         ) {
             Row(
@@ -120,7 +122,7 @@ fun EvButton(
                     modifier = if (size == ButtonSize.REGULAR)
                         Modifier.weight(1f) else Modifier,
                     color = buttonTextColor,
-                    style = Entriverse.typography.buttonBold,
+                    style = Entriverse.typography.buttonText,
                     textAlign = TextAlign.Center,
                 )
 
@@ -150,12 +152,14 @@ enum class ButtonState { PRESSED, DISABLED, DEFAULT }
 @Preview(showSystemUi = true)
 @Composable
 private fun Test() {
-    EvButton(
-        modifier = Modifier,
-        onClick = {},
-        disabled = false,
-        label = "Button Text",
-        type = ButtonType.SUCCESS,
-        size = ButtonSize.REGULAR,
-    )
+    Surface(modifier = Modifier.padding(10.dp)) {
+        EvButton(
+            modifier = Modifier,
+            onClick = {},
+            disabled = false,
+            label = "Button Text",
+            type = ButtonType.SUCCESS,
+            size = ButtonSize.REGULAR,
+        )
+    }
 }

@@ -5,5 +5,6 @@
     <string name="change_theme">തീം മാറ്റുക</string>
     <string name="change_locale">ഇംഗ്ലീഷിലേക്ക് മാറുക</string>
     <string name="email">ഇമെയിൽ</string>
+    <string name="inputemail">ഇമെയിൽ വിലാസം നൽകുക</string>
     <string name="enter_name">പേര് നൽകുക</string>
 </resources>

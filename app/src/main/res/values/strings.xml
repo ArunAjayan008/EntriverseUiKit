@@ -6,5 +6,6 @@
     <string name="change_theme">Change Theme</string>
     <string name="change_locale">Switch to Malayalam</string>
     <string name="email">Email</string>
+    <string name="inputemail">Input email address</string>
     <string name="enter_name">Enter name</string>
 </resources>

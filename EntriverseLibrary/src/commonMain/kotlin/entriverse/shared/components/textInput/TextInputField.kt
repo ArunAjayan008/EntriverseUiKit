@@ -97,7 +97,7 @@ fun EvTextInputField(
             placeHolderText?.let {
                 EvText(
                     text = placeHolderText,
-                    style = Entriverse.typography.buttonDefault,
+                    style = Entriverse.typography.bodyDefaultRegular,
                     color = Entriverse.colors.referenceColors.placeholderText
                 )
             }
@@ -147,7 +147,7 @@ fun EvTextInputField(
                 supportingText?.let {
                     EvText(
                         text = supportingText,
-                        style = Entriverse.typography.display1,
+                        style = Entriverse.typography.captionSmallRegular,
                         color = supportingTextColor ?: Entriverse.colors.referenceColors.placeholderText,
                         modifier = Modifier.weight(1f)
                     )
@@ -155,7 +155,7 @@ fun EvTextInputField(
                 characterLimit?.let { charLimit ->
                     EvText(
                         text = "${textInput?.length}/$charLimit",
-                        style = Entriverse.typography.display1,
+                        style = Entriverse.typography.buttonText,
                         color = Entriverse.colors.referenceColors.placeholderText,
                     )
                 }

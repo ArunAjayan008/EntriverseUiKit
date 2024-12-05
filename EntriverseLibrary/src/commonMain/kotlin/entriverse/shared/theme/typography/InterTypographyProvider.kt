@@ -1,114 +1,143 @@
-package entriverse.shared.entriverselibrary.theme.typography
+package entriverse.shared.theme.typography
 
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.em
-import androidx.compose.ui.unit.sp
-import entriverse.shared.theme.typography.EntriverseTypography
-import entriverse.shared.theme.typography.EntriverseTypographyProvider
+import androidx.compose.ui.unit.TextUnit
+import entriverse.shared.theme.UserLocale
+import entriverse.shared.theme.fonts.interFamily
+import entriverse.shared.theme.fonts.notoSansMalayalamFamily
+import entriverse.shared.theme.fonts.notoSerifMalayalamFamily
+import entriverse.shared.theme.fonts.notoSerifRegularFamily
 
-public val interTypographyProvider: EntriverseTypographyProvider = EntriverseTypographyProvider {
-    val colors = it
-    EntriverseTypography(
-        colors = colors,
-        h1 = interTextStyle(
-            64,
-            100 * 1.00000000,
-            -0.01900000000,
-            300,
-            colors.referenceColors.primaryText
-        ),
-        h1Bold = interTextStyle(
-            64,
-            100 * 1.00000000,
-            -0.01900000000,
-            700,
-            colors.referenceColors.primaryText
-        ),
-        h2 = interTextStyle(
-            48,
-            70 * 1.00000000,
-            -0.01900000000,
-            300,
-            colors.referenceColors.primaryText
-        ),
-        h2Bold = interTextStyle(
-            48,
-            70 * 1.00000000,
-            -0.01900000000,
-            700,
-            colors.referenceColors.primaryText
-        ),
-        h3 = interTextStyle(
-            40,
-            60 * 1.00000000,
-            -0.01900000000,
-            300,
-            colors.referenceColors.primaryText
-        ),
-        h3Bold = interTextStyle(
-            40,
-            60 * 1.00000000,
-            -0.01900000000,
-            700,
-            colors.referenceColors.primaryText
-        ),
-        h4 = interTextStyle(
-            32,
-            50 * 1.00000000,
-            -0.01900000000,
-            300,
-            colors.referenceColors.primaryText
-        ),
-        h4Bold = interTextStyle(
-            32,
-            50 * 1.00000000,
-            -0.01900000000,
-            700,
-            colors.referenceColors.primaryText
-        ),
-        display1 = interTextStyle(
-            12,
-            12 * 1.00000000,
-            -0.016000000,
-            500,
-            colors.referenceColors.primaryContainer
-        ),
-        buttonDefault = interTextStyle(
-            14,
-            25 * 1.00000000,
-            0.015,
-            400,
-            colors.referenceColors.primaryText
-        ),
-        buttonBold = interTextStyle(
-            14,
-            25 * 1.00000000,
-            -0.016000000,
-            700,
-            colors.referenceColors.primaryText
-        ),
-        buttonItalic = interTextStyle(
-            12,
-            12 * 1.00000000,
-            -0.016000000,
-            500,
-            colors.referenceColors.primaryText
-        ),
-    )
-}
+val evTypographyProvider: EntriverseTypographyProvider =
+    EntriverseTypographyProvider { userLocale, fontDimensVal ->
 
-private fun interTextStyle(
-    fontSize: Int,
-    lineHeight: Double,
-    letterSpacing: Double,
-    fontWeight: Int,
-    color: Color,
+        val (fontSerifFamily, fontSansFamily) = when (userLocale) {
+            UserLocale.EN -> Pair(notoSerifRegularFamily, interFamily)
+            UserLocale.ML -> Pair(notoSerifMalayalamFamily, notoSansMalayalamFamily)
+            else -> Pair(interFamily, interFamily)
+        }
+
+        EntriverseTypography(
+            bodyDefaultRegular = evTextStyle(
+                fontFamily = fontSansFamily,
+                fontSize = fontDimensVal.fontDimens.fontSize400,
+                fontWeight = fontDimensVal.fontWeightDimens.fontWeight400,
+                letterSpacing = fontDimensVal.letterSpacingDimens.letterSpacing600
+            ),
+            bodyDefaultMedium = evTextStyle(
+                fontFamily = fontSansFamily,
+                fontSize = fontDimensVal.fontDimens.fontSize400,
+                fontWeight = fontDimensVal.fontWeightDimens.fontWeight500,
+                letterSpacing = fontDimensVal.letterSpacingDimens.letterSpacing600
+            ),
+            bodyDefaultBold = evTextStyle(
+                fontFamily = fontSansFamily,
+                fontSize = fontDimensVal.fontDimens.fontSize400,
+                fontWeight = fontDimensVal.fontWeightDimens.fontWeight600,
+                letterSpacing = fontDimensVal.letterSpacingDimens.letterSpacing600
+            ),
+            bodyLargeRegular = evTextStyle(
+                fontFamily = fontSansFamily,
+                fontSize = fontDimensVal.fontDimens.fontSize500,
+                fontWeight = fontDimensVal.fontWeightDimens.fontWeight400,
+                letterSpacing = fontDimensVal.letterSpacingDimens.letterSpacing300
+            ),
+            bodyLargeMedium = evTextStyle(
+                fontFamily = fontSansFamily,
+                fontSize = fontDimensVal.fontDimens.fontSize500,
+                fontWeight = fontDimensVal.fontWeightDimens.fontWeight500,
+                letterSpacing = fontDimensVal.letterSpacingDimens.letterSpacing300
+            ),
+            bodyLargeBold = evTextStyle(
+                fontFamily = fontSansFamily,
+                fontSize = fontDimensVal.fontDimens.fontSize500,
+                fontWeight = fontDimensVal.fontWeightDimens.fontWeight600,
+                letterSpacing = fontDimensVal.letterSpacingDimens.letterSpacing300
+            ),
+            bodySerifRegular = evTextStyle(
+                fontFamily = fontSerifFamily,
+                fontSize = fontDimensVal.fontDimens.fontSize400,
+                fontWeight = fontDimensVal.fontWeightDimens.fontWeight400,
+                letterSpacing = fontDimensVal.letterSpacingDimens.letterSpacing600
+            ),
+            bodySerifMedium = evTextStyle(
+                fontFamily = fontSerifFamily,
+                fontSize = fontDimensVal.fontDimens.fontSize400,
+                fontWeight = fontDimensVal.fontWeightDimens.fontWeight400,
+                letterSpacing = fontDimensVal.letterSpacingDimens.letterSpacing600
+            ),
+            bodySerifBold = evTextStyle(
+                fontFamily = fontSerifFamily,
+                fontSize = fontDimensVal.fontDimens.fontSize400,
+                fontWeight = fontDimensVal.fontWeightDimens.fontWeight700,
+                letterSpacing = fontDimensVal.letterSpacingDimens.letterSpacing600
+            ),
+            captionDefaultRegular = evTextStyle(
+                fontFamily = fontSansFamily,
+                fontSize = fontDimensVal.fontDimens.fontSize300,
+                fontWeight = fontDimensVal.fontWeightDimens.fontWeight400,
+                letterSpacing = fontDimensVal.letterSpacingDimens.letterSpacing600
+            ),
+            captionDefaultMedium = evTextStyle(
+                fontFamily = fontSansFamily,
+                fontSize = fontDimensVal.fontDimens.fontSize300,
+                fontWeight = fontDimensVal.fontWeightDimens.fontWeight500,
+                letterSpacing = fontDimensVal.letterSpacingDimens.letterSpacing600
+            ),
+            captionDefaultBold = evTextStyle(
+                fontFamily = fontSansFamily,
+                fontSize = fontDimensVal.fontDimens.fontSize300,
+                fontWeight = fontDimensVal.fontWeightDimens.fontWeight700,
+                letterSpacing = fontDimensVal.letterSpacingDimens.letterSpacing600
+            ),
+            captionSmallRegular = evTextStyle(
+                fontFamily = fontSansFamily,
+                fontSize = fontDimensVal.fontDimens.fontSize200,
+                fontWeight = fontDimensVal.fontWeightDimens.fontWeight400,
+                letterSpacing = fontDimensVal.letterSpacingDimens.letterSpacing600
+            ),
+            captionSmallMedium = evTextStyle(
+                fontFamily = fontSansFamily,
+                fontSize = fontDimensVal.fontDimens.fontSize200,
+                fontWeight = fontDimensVal.fontWeightDimens.fontWeight500,
+                letterSpacing = fontDimensVal.letterSpacingDimens.letterSpacing600
+            ),
+            captionSmallBold = evTextStyle(
+                fontFamily = fontSansFamily,
+                fontSize = fontDimensVal.fontDimens.fontSize200,
+                fontWeight = fontDimensVal.fontWeightDimens.fontWeight700,
+                letterSpacing = fontDimensVal.letterSpacingDimens.letterSpacing600
+            ),
+            labelText = evTextStyle(
+                fontFamily = fontSansFamily,
+                fontSize = fontDimensVal.fontDimens.fontSize100,
+                fontWeight = fontDimensVal.fontWeightDimens.fontWeight700,
+                letterSpacing = fontDimensVal.letterSpacingDimens.letterSpacing800
+            ),
+            buttonText = evTextStyle(
+                fontFamily = fontSansFamily,
+                fontSize = fontDimensVal.fontDimens.fontSize400,
+                fontWeight = fontDimensVal.fontWeightDimens.fontWeight700,
+                letterSpacing = fontDimensVal.letterSpacingDimens.letterSpacing700
+            ),
+        )
+    }
+
+
+private fun evTextStyle(
+    fontFamily: FontFamily,
+    fontSize: TextUnit,
+    fontWeight: FontWeight,
+    letterSpacing: TextUnit
 ): TextStyle = TextStyle(
-    fontSize = fontSize.sp,
-    lineHeight = lineHeight.sp,
-    letterSpacing = letterSpacing.em,
-    fontWeight = FontWeight(fontWeight),
-    color = color,
+    fontFamily = fontFamily,
+    fontSize = fontSize,
+    fontWeight = fontWeight,
+    letterSpacing = letterSpacing,
 )
+
+
+
+

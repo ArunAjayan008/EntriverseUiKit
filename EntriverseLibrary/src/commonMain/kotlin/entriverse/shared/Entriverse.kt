@@ -3,16 +3,15 @@ package entriverse.shared
 import EntriverseColorPalette
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
-import entriverse.shared.theme.typography.EntriverseTypography
-import entriverse.shared.theme.typography.EntriverseTypographyManager.LocalEntriverseTypography
 import entriverse.shared.theme.colors.EntriverseColors
 import entriverse.shared.theme.colors.LocalEntriverseColors
 import entriverse.shared.theme.dimen.EntriverseDimens
 import entriverse.shared.theme.dimen.EntriverseDimensValues
-import entriverse.shared.theme.dimen.EntriverseFontDimens
 import entriverse.shared.theme.dimen.LocalDimens
+import entriverse.shared.theme.typography.EntriverseTypography
+import entriverse.shared.theme.typography.EntriverseTypographyManager.LocalEntriverseTypography
 
- object Entriverse {
+object Entriverse {
      val colors: EntriverseColors
         @Composable
         @ReadOnlyComposable
@@ -32,5 +31,4 @@ import entriverse.shared.theme.dimen.LocalDimens
         get() = LocalDimens.current
 
      val dimens: EntriverseDimensValues = EntriverseDimensValues()
-     val fontDimens: EntriverseFontDimens = EntriverseFontDimens()
 }

@@ -1,6 +1,75 @@
 import androidx.compose.ui.graphics.Color
 
 class EntriverseColorPalette internal constructor() {
+
+    //Material colors
+
+    val LightPrimary = Color(0xFF0061B5)
+    val LightOnPrimary = Color(0xFFFFFFFF)
+    val LightPrimaryContainer = Color(0xFFE6F3FF)
+    val LightOnPrimaryContainer = Color(0xFF004B8C)
+    val LightInversePrimary = Color(0xFFB0DAFF)
+    val LightSecondary = Color(0xFF00805C)
+    val LightOnSecondary = Color(0xFFFFFFFF)
+    val LightSecondaryContainer = Color(0xFFE6F2EF)
+    val LightOnSecondaryContainer = Color(0xFF004633)
+    val LightTertiary = Color(0xFF7F3E98)
+    val LightOnTertiary = Color(0xFFFFFFFF)
+    val LightTertiaryContainer = Color(0xFFF2ECF5)
+    val LightOnTertiaryContainer = Color(0xFF462254)
+    val LightBackground = Color(0xFFFFFFFF)
+    val LightOnBackground = Color(0xFF212121)
+    val LightSurface = Color(0xFFFFFFFF)
+    val LightOnSurface = Color(0xFF212121)
+    val LightSurfaceVariant = Color(0xFFF6F6F6)
+    val LightOnSurfaceVariant = Color(0xFF212121)
+    val LightInverseSurface = Color(0xFF1E1E1E)
+    val LightInverseOnSurface = Color(0xFFF0F0F0)
+    val LightSurfaceTint = Color(0xFFF0F0F0)
+    val LightError = Color(0xFFF65A5B)
+    val LightOnError = Color(0xFFFFFFFF)
+    val LightErrorContainer = Color(0xFFFEEFEF)
+    val LightOnErrorContainer = Color(0xFF873232)
+    val LightOutline = Color(0xFFF0F0F0)
+    val LightOutlineVariant = Color(0xFF0061B5)
+    val LightScrim = Color(0x99000000)
+
+    val DarkPrimary = Color(0xFF8AC9FF)
+    val DarkOnPrimary = Color(0xFF003A6B)
+    val DarkPrimaryContainer = Color(0xFF003A6B)
+    val DarkOnPrimaryContainer = Color(0xFFB0DAFF)
+    val DarkInversePrimary = Color(0xFF004B8C)
+    val DarkSecondary = Color(0xFF33997D)
+    val DarkOnSecondary = Color(0xFF003627)
+    val DarkSecondaryContainer = Color(0xFF003627)
+    val DarkOnSecondaryContainer = Color(0xFFB0D8CC)
+    val DarkTertiary = Color(0xFF9965AD)
+    val DarkOnTertiary = Color(0xFF351A40)
+    val DarkTertiaryContainer = Color(0xFF351A40)
+    val DarkOnTertiaryContainer = Color(0xFFD7C3DF)
+    val DarkBackground = Color(0xFF121212)
+    val DarkOnBackground = Color(0xFFF0F0F0)
+    val DarkSurface = Color(0xFF1E1E1E)
+    val DarkOnSurface = Color(0xFFF0F0F0)
+    val DarkSurfaceVariant = Color(0xFF1A1A1A)
+    val DarkOnSurfaceVariant = Color(0xFFF0F0F0)
+    val DarkInverseSurface = Color(0xFFFFFFFF)
+    val DarkInverseOnSurface = Color(0xFF212121)
+    val DarkSurfaceTint = Color(0xFF000000)
+    val DarkError = Color(0xFFF87B7C)
+    val DarkOnError = Color(0xFF672626)
+    val DarkErrorContainer = Color(0xFF672626)
+    val DarkOnErrorContainer = Color(0xFFFCCCCC)
+    val DarkOutline = Color(0xFF2C2C2C)
+    val DarkOutlineVariant = Color(0xFF8AC9FF)
+    val DarkScrim = Color(0x99000000)
+
+
+
+
+
+    //Entriverse colors
+
     val white: Color = Color(0xFFFFFFFF)
     val black: Color = Color(0xFF000000)
 

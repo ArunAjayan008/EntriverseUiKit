@@ -1,9 +1,7 @@
 package entriverse.shared.components.button
 
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ripple.RippleAlpha
 import androidx.compose.material.ripple.RippleTheme
 import androidx.compose.runtime.Composable
@@ -15,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import entriverse.shared.Entriverse
+import entriverse.shared.Entriverse.entriverseDimens
 
 internal class ButtonProperties {
     var startPadding by mutableStateOf(0.dp)
@@ -30,7 +29,8 @@ internal class ButtonProperties {
         hasEndIcon: Boolean,
         size: ButtonSize
     ) {
-        val dimens = Entriverse.entriverseDimens.referenceDimens
+        val dimens = entriverseDimens.referenceDimens
+        val fontDimens = entriverseDimens.fontDimens
         when (size) {
             ButtonSize.SMALL -> {
                 startPadding = if (hasStartIcon) {
@@ -45,7 +45,7 @@ internal class ButtonProperties {
                 }
                 textIconSpacerWidth = dimens.spacingM
                 verticalPadding = dimens.spacingM
-                buttonTextSize = Entriverse.fontDimens.text14sp
+                buttonTextSize = fontDimens.fontSize400
                 iconSize = dimens.spacingXxl
             }
 
@@ -62,7 +62,7 @@ internal class ButtonProperties {
                 }
                 textIconSpacerWidth = dimens.spacingXs
                 verticalPadding = dimens.spacingL
-                buttonTextSize = Entriverse.fontDimens.text14sp
+                buttonTextSize = fontDimens.fontSize400
                 iconSize = dimens.spacingXxl
             }
 
@@ -79,7 +79,7 @@ internal class ButtonProperties {
                 }
                 textIconSpacerWidth = dimens.spacingM
                 verticalPadding = dimens.spacingM
-                buttonTextSize = Entriverse.fontDimens.text14sp
+                buttonTextSize = fontDimens.fontSize400
                 iconSize = dimens.spacingXl
             }
         }

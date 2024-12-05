@@ -98,7 +98,7 @@ fun EvExtendedFAB(
             EvText(
                 text = label,
                 color = textColor,
-                style = Entriverse.typography.buttonBold,
+                style = Entriverse.typography.buttonText,
                 textAlign = TextAlign.Center
             )
         },
