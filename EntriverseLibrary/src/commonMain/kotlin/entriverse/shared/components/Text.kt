@@ -55,6 +55,7 @@ import androidx.compose.ui.unit.TextUnit
         maxLines = maxLines,
         textAlign=textAlign,
         onTextLayout=onTextLayout,
-        style=textStyle
+        style=textStyle,
+        color = color,
     )
 }

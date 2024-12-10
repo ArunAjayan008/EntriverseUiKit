@@ -15,6 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import entriverse.shared.Entriverse
+import entriverse.shared.Entriverse.colors
 import entriverse.shared.components.EvText
 import me.arunajayan.entriverselibrary.R
 
@@ -24,65 +25,9 @@ fun EvExtendedFAB(
     onClick: () -> Unit,
     label: String,
     expanded: Boolean = true,
-    buttonColor: Color,
-    textColor: Color,
     icon: Int,
 ) {
-
-    /* Box(
-         modifier = modifier
-             .wrapContentWidth()
-             .shadow(
-                 color = Color.Black,
-                 borderRadius = 0.dp,
-                 blurRadius = 8.dp,
-                 offsetY = 40.dp,
-                 offsetX = 0.dp,
-                 spread = 0.dp,
-                 modifier = Modifier
-             )
-             .layoutId("background")
-             .background(color = buttonColor, shape = RoundedCornerShape(16.dp))
-             .clip(shape = RoundedCornerShape(16.dp))
-             .clickable(
-                 onClick = onClick,
-                 enabled = !disabled,
-                 role = Role.Button,
-                 interactionSource = interactionSource,
-                 indication = rememberRipple(color = textColor)
-             ),
-         contentAlignment = Alignment.Center
-     ) {
-         Row(
-             modifier = Modifier.padding(
-                 vertical = Entriverse.entriverseDimens.referenceDimens.spacingXl,
-                 horizontal = Entriverse.entriverseDimens.referenceDimens.spacingXl
-             ),
-             verticalAlignment = Alignment.CenterVertically
-         ) {
-
-             if (icon != null) {
-                 Icon(
-                     painter = painterResource(id = icon),
-                     contentDescription = "Button Icon",
-                     tint = textColor,
-                     modifier = Modifier.size(Entriverse.entriverseDimens.referenceDimens.spacingXl)
-                 )
-             }
-
-             if (expanded) {
-                 Spacer(modifier = Modifier.width(Entriverse.entriverseDimens.referenceDimens.spacingM))
-                 EntriverseText(
-                     text = label,
-                     color = textColor,
-                     style = Entriverse.typography.buttonBold,
-                     textAlign = TextAlign.Center
-                 )
-             }
-         }
-     }
-  */
-
+    val buttonColors = colors.componentColors.fabColors
     ExtendedFloatingActionButton(
         modifier = modifier,
         expanded = expanded,
@@ -90,14 +35,14 @@ fun EvExtendedFAB(
             Icon(
                 painter = painterResource(id = icon),
                 contentDescription = "Floating action button",
-                tint = textColor,
+                tint = buttonColors.fabIconColor,
                 modifier = Modifier.size(Entriverse.entriverseDimens.referenceDimens.spacingXl)
             )
         },
         text = {
             EvText(
                 text = label,
-                color = textColor,
+                color = buttonColors.fabTextColor,
                 style = Entriverse.typography.buttonText,
                 textAlign = TextAlign.Center
             )
@@ -108,48 +53,10 @@ fun EvExtendedFAB(
             pressedElevation = Entriverse.entriverseDimens.referenceDimens.spacingXxl,
             hoveredElevation = Entriverse.entriverseDimens.referenceDimens.spacingXl
         ),
-        containerColor = buttonColor,
+        containerColor = buttonColors.fabContainerColor,
         interactionSource = remember { MutableInteractionSource() },
-        )
+    )
 }
-
-/*fun Modifier.shadow(
-    color: Color = Color.Black,
-    borderRadius: Dp = 0.dp,
-    blurRadius: Dp = 0.dp,
-    offsetY: Dp = 0.dp,
-    offsetX: Dp = 0.dp,
-    spread: Dp = 0f.dp,
-    modifier: Modifier = Modifier
-) = this.then(
-    modifier.drawBehind {
-        this.drawIntoCanvas {
-            val paint = Paint()
-            val frameworkPaint = paint.asFrameworkPaint()
-            val spreadPixel = spread.toPx()
-            val leftPixel = (0f - spreadPixel) + offsetX.toPx() + 10
-            val topPixel = (0f - spreadPixel) + offsetY.toPx() + 15
-            val rightPixel = (this.size.width + spreadPixel - 10)
-            val bottomPixel = (this.size.height + spreadPixel - 5)
-
-            if (blurRadius != 0.dp) {
-                frameworkPaint.maskFilter =
-                    (BlurMaskFilter(blurRadius.toPx(), BlurMaskFilter.Blur.NORMAL))
-            }
-
-            frameworkPaint.color = color.toArgb()
-            it.drawRoundRect(
-                left = leftPixel,
-                top = topPixel,
-                right = rightPixel,
-                bottom = bottomPixel,
-                radiusX = borderRadius.toPx(),
-                radiusY = borderRadius.toPx(),
-                paint
-            )
-        }
-    }
-)*/
 
 
 @Preview(showSystemUi = true)
@@ -161,9 +68,7 @@ private fun Test() {
             onClick = {},
             label = "Ask Eva",
             expanded = true,
-            icon = R.drawable.ev_button_icon,
-            buttonColor = Entriverse.palette.fabColor,
-            textColor = Entriverse.palette.brown800
+            icon = R.drawable.ev_button_icon
         )
     }
 }

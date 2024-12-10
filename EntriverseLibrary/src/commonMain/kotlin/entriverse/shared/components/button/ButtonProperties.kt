@@ -29,58 +29,59 @@ internal class ButtonProperties {
         hasEndIcon: Boolean,
         size: ButtonSize
     ) {
-        val dimens = entriverseDimens.referenceDimens
+        val spacingDimens = entriverseDimens.referenceDimens
         val fontDimens = entriverseDimens.fontDimens
+        val sizeDimens = entriverseDimens.sizeDimens
         when (size) {
             ButtonSize.SMALL -> {
                 startPadding = if (hasStartIcon) {
-                    dimens.spacingM
+                    spacingDimens.spacingM
                 } else {
-                    dimens.spacingXl
+                    spacingDimens.spacingXl
                 }
                 endPadding = if (hasEndIcon) {
-                    dimens.spacingM
+                    spacingDimens.spacingM
                 } else {
-                    dimens.spacingXl
+                    spacingDimens.spacingXl
                 }
-                textIconSpacerWidth = dimens.spacingM
-                verticalPadding = dimens.spacingM
+                textIconSpacerWidth = spacingDimens.spacingM
+                verticalPadding = spacingDimens.spacingM
                 buttonTextSize = fontDimens.fontSize400
-                iconSize = dimens.spacingXxl
+                iconSize = sizeDimens.dimen20dp
             }
 
             ButtonSize.REGULAR -> {
                 startPadding = if (hasStartIcon) {
-                    dimens.spacingXl
+                    spacingDimens.spacingXl
                 } else {
-                    dimens.spacingXxxl
+                    spacingDimens.spacingXxxl
                 }
                 endPadding = if (hasEndIcon) {
-                    dimens.spacingXl
+                    spacingDimens.spacingXl
                 } else {
-                    dimens.spacingXxxl
+                    spacingDimens.spacingXxxl
                 }
-                textIconSpacerWidth = dimens.spacingXs
-                verticalPadding = dimens.spacingL
+                textIconSpacerWidth = spacingDimens.spacingXs
+                verticalPadding = spacingDimens.spacingL
                 buttonTextSize = fontDimens.fontSize400
-                iconSize = dimens.spacingXxl
+                iconSize = sizeDimens.dimen24dp
             }
 
             ButtonSize.EXTRA_SMALL -> {
                 startPadding = if (hasStartIcon) {
-                    dimens.spacingM
+                    spacingDimens.spacingM
                 } else {
-                    dimens.spacingXl
+                    spacingDimens.spacingXl
                 }
                 endPadding = if (hasEndIcon) {
-                    dimens.spacingM
+                    spacingDimens.spacingM
                 } else {
-                    dimens.spacingXl
+                    spacingDimens.spacingXl
                 }
-                textIconSpacerWidth = dimens.spacingM
-                verticalPadding = dimens.spacingM
+                textIconSpacerWidth = spacingDimens.spacingM
+                verticalPadding = spacingDimens.spacingM
                 buttonTextSize = fontDimens.fontSize400
-                iconSize = dimens.spacingXl
+                iconSize = sizeDimens.dimen16dp
             }
         }
     }
@@ -95,13 +96,3 @@ fun Modifier.calcButtonSize(size: ButtonSize) =
             ButtonSize.EXTRA_SMALL -> Modifier.wrapContentWidth()
         }
     )
-
-
-@Immutable
-object RedRipple : RippleTheme {
-    @Composable
-    override fun defaultColor() = Entriverse.palette.red900
-
-    @Composable
-    override fun rippleAlpha(): RippleAlpha = RippleAlpha(1f, 1f, 1f, 1f)
-}

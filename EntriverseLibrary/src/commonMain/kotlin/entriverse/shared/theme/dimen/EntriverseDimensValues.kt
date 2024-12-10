@@ -174,4 +174,57 @@ class EntriverseDimensValues internal constructor() {
     val spacing1200: Dp = 72.dp
     val spacing1300: Dp = 96.dp
     val spacing1400: Dp = 120.dp
+
+    val dimen1dp = 1.dp
+    val dimen2dp = 2.dp
+    val dimen3dp = 3.dp
+    val dimen4dp = 4.dp
+    val dimen5dp = 5.dp
+    val dimen6dp = 6.dp
+    val dimen7dp = 7.dp
+    val dimen8dp = 8.dp
+    val dimen9dp = 9.dp
+    val dimen10dp = 10.dp
+    val dimen11dp = 11.dp
+    val dimen12dp = 12.dp
+    val dimen13dp = 13.dp
+    val dimen14dp = 14.dp
+    val dimen15dp = 15.dp
+    val dimen16dp = 16.dp
+    val dimen17dp = 17.dp
+    val dimen18dp = 18.dp
+    val dimen19dp = 19.dp
+    val dimen20dp = 20.dp
+    val dimen21dp = 21.dp
+    val dimen22dp = 22.dp
+    val dimen23dp = 23.dp
+    val dimen24dp = 24.dp
+    val dimen25dp = 25.dp
+    val dimen26dp = 26.dp
+    val dimen27dp = 27.dp
+    val dimen28dp = 28.dp
+    val dimen29dp = 29.dp
+    val dimen30dp = 30.dp
+    val dimen31dp = 31.dp
+    val dimen32dp = 32.dp
+    val dimen33dp = 33.dp
+    val dimen34dp = 34.dp
+    val dimen35dp = 35.dp
+    val dimen36dp = 36.dp
+    val dimen37dp = 37.dp
+    val dimen38dp = 38.dp
+    val dimen39dp = 39.dp
+    val dimen40dp = 40.dp
+    val dimen41dp = 41.dp
+    val dimen42dp = 42.dp
+    val dimen43dp = 43.dp
+    val dimen44dp = 44.dp
+    val dimen45dp = 45.dp
+    val dimen46dp = 46.dp
+    val dimen47dp = 47.dp
+    val dimen48dp = 48.dp
+    val dimen49dp = 49.dp
+    val dimen50dp = 50.dp
+
+
 }

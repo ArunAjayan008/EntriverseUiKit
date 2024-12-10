@@ -8,7 +8,7 @@ data class EntriverseColors internal constructor(
     val lightMode: Boolean,
     val referenceColors: ReferenceColors,
     val componentColors: ComponentColors,
-    val materialColors:  MaterialColors,
+    val materialColors: MaterialColors,
 )
 
 @Immutable
@@ -96,113 +96,270 @@ data class ReferenceColors internal constructor(
 )
 
 @Immutable
-data class ComponentColors internal constructor(
+data class ComponentColors(
+    val buttonColors: ButtonColors,
+    val fabColors: FabColors,
+    val checkboxColors: CheckboxColors,
+    val inputColors: InputColors,
+    val labelColors: LabelColors,
+    val iconColors: IconColors,
+    val supportingTextColors: SupportingTextColors,
+    val navigationBarColors: NavigationBarColors,
+    val radioButtonColors: RadioButtonColors,
+    val segmentedButtonColors: SegmentedButtonColors,
+    val sliderColors: SliderColors,
+    val snackBarColors: SnackbarColors,
+    val tabsColors: TabsColors,
+    val tooltipColors: TooltipColors,
+    val selectionColors: SelectionColors
+)
+
+@Immutable
+data class ButtonColors(
     val buttonFilledDefault: Color,
+    val buttonFilledDefaultText: Color,
+    val buttonFilledDisabledText: Color,
+    val buttonFilledDisabled: Color,
+    val buttonFilledHover: Color,
+    val buttonFilledHoverText: Color,
+    val buttonFilledFocused: Color,
+    val buttonFilledFocusedText: Color,
+    val buttonFilledFocusedBorder: Color,
+    val buttonFilledDefaultIcon: Color,
+    val buttonFilledDisabledIcon: Color,
+    val buttonFilledHoverIcon: Color,
+    val buttonFilledFocusedIcon: Color,
     val buttonTonalDefault: Color,
     val buttonTonalDefaultText: Color,
     val buttonTonalDisabled: Color,
     val buttonTonalDisabledText: Color,
-    val buttonTonalDisabledIcon: Color,
     val buttonTonalHover: Color,
     val buttonTonalHoverText: Color,
+    val buttonTonalFocused: Color,
+    val buttonTonalFocusedText: Color,
+    val buttonTonalFocusedBorder: Color,
+    val buttonTonalDefaultIcon: Color,
+    val buttonTonalDisabledIcon: Color,
     val buttonTonalHoverIcon: Color,
-    val buttonFilledDefaultIcon: Color,
+    val buttonTonalFocusedIcon: Color,
     val buttonOutlinedBorderDefault: Color,
-    val buttonOutlinedDefault: Color,
-    val buttonOutlinedHover: Color,
+    val buttonOutlinedDefaultText: Color,
+    val buttonOutlinedDefaultIcon: Color,
+    val buttonOutlinedBorderDisabled: Color,
+    val buttonOutlinedDisabledText: Color,
+    val buttonOutlinedDisabledIcon: Color,
+    val buttonOutlinedFillHover: Color,
     val buttonOutlinedHoverText: Color,
     val buttonOutlinedHoverIcon: Color,
-    val buttonTextDefault: Color,
-    val buttonTextHover: Color,
-    val buttonTextDisabled: Color,
-    val buttonBackgroundDefault: Color,
-    val buttonBackgroundHover: Color,
-    val buttonBackgroundDisabled: Color,
-    val buttonTextSecondary: Color,
-    val buttonBackgroundSecondary: Color,
-    val buttonTextTertiary: Color,
-    val buttonBackgroundTertiary: Color,
-    val buttonTonalPressed: Color,
-    val buttonTonalPressedText: Color,
-    val buttonTextOnDark: Color,
-    val buttonBackgroundOnDark: Color,
-    val linkDefault: Color,
-    val linkHover: Color,
-    val linkVisited: Color,
-    val fabBackground: Color,
-    val fabIconDefault: Color,
-    val fabIconDisabled: Color,
-    val fabBackgroundDisabled: Color,
-    val checkboxUnchecked: Color,
-    val checkboxChecked: Color,
-    val checkboxDisabled: Color,
-    val checkboxTextChecked: Color,
-    val checkboxTextUnchecked: Color,
-    val switchUnchecked: Color,
-    val switchChecked: Color,
-    val switchDisabled: Color,
-    val switchTrackUnchecked: Color,
-    val switchTrackChecked: Color,
-    val textPrimary: Color,
-    val textSecondary: Color,
-    val textTertiary: Color,
-    val textDisabled: Color,
-    val backgroundDefault: Color,
-    val backgroundSecondary: Color,
-    val backgroundTertiary: Color,
-    val borderDefault: Color,
-    val borderFocus: Color,
-    val borderDisabled: Color,
-    val errorText: Color,
-    val successText: Color,
-    val warningText: Color,
-    val infoText: Color,
-    val containerBackground: Color,
-    val containerBorder: Color,
-    val inputTextDefault: Color,
-    val inputTextPlaceholder: Color,
-    val inputTextFocus: Color,
-    val inputTextDisabled: Color,
-    val labelTextDefault: Color,
-    val labelTextFocus: Color,
-    val labelTextDisabled: Color,
-    val leadingIconDefault: Color,
-    val leadingIconFocus: Color,
-    val leadingIconDisabled: Color,
-    val supportingTextDefault: Color,
-    val supportingTextFocus: Color,
-    val supportingTextDisabled: Color,
-    val trailingIconDefault: Color,
-    val trailingIconFocus: Color,
-    val trailingIconDisabled: Color,
-    val navigationBarBackground: Color,
-    val navigationBarIconDefault: Color,
-    val navigationBarIconSelected: Color,
-    val radioButtonUnchecked: Color,
-    val radioButtonChecked: Color,
-    val radioButtonDisabled: Color,
-    val radioButtonTextChecked: Color,
-    val radioButtonTextUnchecked: Color,
-    val segmentedButtonBackgroundDefault: Color,
-    val segmentedButtonBackgroundSelected: Color,
-    val segmentedButtonTextDefault: Color,
-    val segmentedButtonTextSelected: Color,
-    val selectionBackground: Color,
-    val selectionText: Color,
-    val sliderTrackDefault: Color,
-    val sliderTrackActive: Color,
-    val sliderThumb: Color,
-    val sliderThumbDisabled: Color,
-    val snackbarBackground: Color,
-    val snackbarText: Color,
-    val snackbarActionText: Color,
-    val tabsBackgroundDefault: Color,
-    val tabsBackgroundSelected: Color,
-    val tabsTextDefault: Color,
-    val tabsTextSelected: Color,
-    val tooltipBackground: Color,
-    val tooltipText: Color
+    val buttonOutlinedFillFocused: Color,
+    val buttonOutlinedFocusedText: Color,
+    val buttonOutlinedFocusedIcon: Color,
+    val buttonOutlinedBorderHover: Color,
+    val buttonOutlinedBorderFocused: Color,
+    val buttonSecondaryOutlinedBorderDefault: Color,
+    val buttonSecondaryOutlinedDefaultText: Color,
+    val buttonSecondaryOutlinedDefaultIcon: Color,
+    val buttonSecondaryOutlinedBorderDisabled: Color,
+    val buttonSecondaryOutlinedDisabledText: Color,
+    val buttonSecondaryOutlinedDisabledIcon: Color,
+    val buttonSecondaryOutlinedFillHover: Color,
+    val buttonSecondaryOutlinedBorderHover: Color,
+    val buttonSecondaryOutlinedHoverText: Color,
+    val buttonSecondaryOutlinedHoverIcon: Color,
+    val buttonSecondaryOutlinedFillFocused: Color,
+    val buttonSecondaryOutlinedBorderFocused: Color,
+    val buttonSecondaryOutlinedFocusedText: Color,
+    val buttonSecondaryOutlinedFocusedIcon: Color,
+    val buttonDestructiveDefault: Color,
+    val buttonDestructiveDefaultText: Color,
+    val buttonDestructiveDefaultIcon: Color,
+    val buttonDestructiveDisabled: Color,
+    val buttonDestructiveDisabledText: Color,
+    val buttonDestructiveDisabledIcon: Color,
+    val buttonDestructiveHover: Color,
+    val buttonDestructiveHoverText: Color,
+    val buttonDestructiveHoverIcon: Color,
+    val buttonDestructiveFocused: Color,
+    val buttonDestructiveFocusedText: Color,
+    val buttonDestructiveFocusedIcon: Color,
+    val buttonDestructiveFocusedBorder: Color,
+    val buttonSuccessDefault: Color,
+    val buttonSuccessDefaultText: Color,
+    val buttonSuccessDefaultIcon: Color,
+    val buttonSuccessDisabled: Color,
+    val buttonSuccessDisabledText: Color,
+    val buttonSuccessDisabledIcon: Color,
+    val buttonSuccessHover: Color,
+    val buttonSuccessHoverText: Color,
+    val buttonSuccessHoverIcon: Color,
+    val buttonSuccessFocused: Color,
+    val buttonSuccessFocusedText: Color,
+    val buttonSuccessFocusedIcon: Color,
+    val buttonSuccessFocusedBorder: Color,
 )
+
+@Immutable
+data class FabColors(
+    val fabContainerColor: Color,
+    val fabTextColor: Color,
+    val fabIconColor: Color,
+    val fabHoverColor: Color,
+)
+
+@Immutable
+data class CheckboxColors(
+    val checkboxActive: Color,
+    val checkboxInactive: Color,
+    val checkboxInactiveHover: Color,
+    val checkboxActiveHover: Color,
+    val checkboxDisabled: Color,
+)
+
+@Immutable
+data class InputColors(
+    val cursorColor: Color,
+    val inputTextActive: Color,
+    val inputTextDisabled: Color,
+    val inputTextPlaceholder: Color,
+    val inputContainerSuccess: Color,
+    val inputContainerError: Color,
+    val inputContainerFocused: Color,
+    val inputContainerOutline: Color,
+)
+
+@Immutable
+data class LabelColors(
+    val labelText: Color,
+    val labelTextFocused: Color,
+    val labelTextDisabled: Color,
+    val labelBgColorDefault: Color,
+    val labelBgColorPrimaryContainer: Color,
+    val labelTextError: Color,
+    val labelTextSuccess: Color,
+)
+
+@Immutable
+data class IconColors(
+    val leadingIcon: Color,
+    val leadingIconFocused: Color,
+    val leadingIconDisabled: Color,
+    val leadingIconError: Color,
+    val leadingIconSuccess: Color,
+    val leadingIconPlaceholder: Color,
+    val trailingIcon: Color,
+    val trailingIconFocused: Color,
+    val trailingIconError: Color,
+    val trailingIconSuccess: Color,
+    val trailingIconDisabled: Color,
+    val trailingIconSecondary: Color,
+    val trailingIconPlaceholder: Color,
+)
+
+@Immutable
+data class SupportingTextColors(
+    val supportingText: Color,
+    val supportingTextError: Color,
+    val supportingTextSuccess: Color,
+    val supportingTextDisabled: Color,
+
+    )
+
+@Immutable
+data class NavigationBarColors(
+    val navContainerColor: Color,
+    val navTextColor: Color,
+    val navActiveIndicator: Color,
+    val navIconActive: Color,
+    val navIconInactive: Color,
+    val navPremiumIconActive: Color,
+    val navDividerColor: Color,
+    )
+
+@Immutable
+data class RadioButtonColors(
+    val radioActive: Color,
+    val radioInactiveHover: Color,
+    val radioActiveHover: Color,
+    val radioDisabled: Color,
+    val radioInactive: Color,
+
+    )
+
+@Immutable
+data class SegmentedButtonColors(
+    val segmentedActive: Color,
+    val segmentedActiveOutline: Color,
+    val segmentedInactiveContainer: Color,
+    val segmentedInactiveOutline: Color,
+    val segmentedActiveText: Color,
+    val segmentedActiveIcon: Color,
+    val segmentedInactiveIcon: Color,
+    val segmentedInactiveText: Color,
+    val segmentedBg: Color,
+
+    )
+
+@Immutable
+data class SliderColors(
+    val sliderValueContainerBg: Color,
+    val sliderValueText: Color,
+    val sliderHandleContainerBg: Color,
+    val sliderHandle: Color,
+    val sliderInactiveTrack: Color,
+    val sliderActiveTrack: Color,
+    val sliderStopIndicatorInactive: Color,
+    val sliderDisabledTrack: Color,
+    val sliderHandleDisabled: Color,
+    val sliderHandleDisabledContainer: Color,
+    val sliderStopIndicatorActive: Color,
+    val sliderStopIndicatorDisabled: Color,
+    )
+
+@Immutable
+data class SnackbarColors(
+    val snackbarBgDefault: Color,
+    val snackbarText: Color,
+    val snackbarPrimaryCta: Color,
+)
+
+@Immutable
+data class TabsColors(
+    val secondaryTabActiveText: Color,
+    val secondaryTabInactiveText: Color,
+    val secondaryTabIndicator: Color,
+    val secondaryTabDivider: Color,
+    val secondaryTabBgColor: Color,
+    val secondaryTabHover: Color,
+
+    )
+
+@Immutable
+data class TooltipColors(
+    val tooltipBgDefault: Color,
+    val tooltipBgGrey: Color,
+    val tooltipPrimaryText: Color,
+    val tooltipSubtext: Color,
+    val tooltipPrimaryCta: Color,
+    val tooltipSecondaryCta: Color,
+
+    )
+
+@Immutable
+data class SelectionColors(
+    val selectionActive: Color,
+    val selectionInactive: Color,
+    val selectionText: Color,
+    val selectionOutlineActive: Color,
+    val selectionSubtext: Color,
+    val selectionProgressBarBg: Color,
+    val selectionProgressIndicator: Color,
+    val selectionDisabledText: Color,
+    val selectionDisabled: Color,
+    val selectionGoldActive: Color,
+    val selectionGoldOutlineActive: Color,
+    val selectionOutlineInactive: Color,
+    val selectionTextGold: Color,
+    )
 
 @Immutable
 data class MaterialColors(

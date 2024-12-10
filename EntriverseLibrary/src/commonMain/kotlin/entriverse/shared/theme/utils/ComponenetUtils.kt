@@ -9,6 +9,7 @@ object CustomRippleTheme : RippleTheme {
     private var customRippleColor: Color = Color.Gray
 
     fun setRippleColor(color: Color) {
+        println("arunentri $color")
         customRippleColor = color
     }
 
@@ -17,7 +18,7 @@ object CustomRippleTheme : RippleTheme {
 
     @Composable
     override fun rippleAlpha(): RippleAlpha = RippleAlpha(
-        pressedAlpha = 1.0f,
+        pressedAlpha = 0.5f,
         draggedAlpha = 0.0f,
         focusedAlpha = 0.0f,
         hoveredAlpha = 0.0f

@@ -72,17 +72,18 @@ class EntriverseColorPalette internal constructor() {
 
     val white: Color = Color(0xFFFFFFFF)
     val black: Color = Color(0xFF000000)
+    val fixedPureBlack: Color = Color(0xFF000000)
 
     val blue50: Color = Color(0xFFE6F3FF)
     val blue100: Color = Color(0xFFB0DAFF)
-    val blue200: Color = Color(0xFFB0DAFF)
-    val blue300: Color = Color(0xFF8AC9FF)
-    val blue400: Color = Color(0xFF54B0FF)
-    val blue500: Color = Color(0xFF33A1FF)
-    val blue600: Color = Color(0xFF0089FF)
-    val blue700: Color = Color(0xFF007DE8)
-    val blue800: Color = Color(0xFF0061B5)
-    val blue900: Color = Color(0xFF004B8C)
+    val blue200: Color = Color(0xFF8AC9FF)
+    val blue300: Color = Color(0xFF54B0FF)
+    val blue400: Color = Color(0xFF33A1FF)
+    val blue500: Color = Color(0xFF0089FF)
+    val blue600: Color = Color(0xFF007DE8)
+    val blue700: Color = Color(0xFF0061B5)
+    val blue800: Color = Color(0xFF004B8C)
+    val blue900: Color = Color(0xFF003A6B)
 
     val green50: Color = Color(0xFFE6F2EF)
     val green100: Color = Color(0xFFB0D8CC)
@@ -200,4 +201,7 @@ class EntriverseColorPalette internal constructor() {
 
     val transparentColor = Color(0x00000000)
     val fabColor = Color(0xFFFFE2B0)
+    val fixedBlackLevel2 = Color(0x00000066)
+    val fixedWhiteLevel2 = Color(0xffffff66)
+    val darkLevel1 = Color(0x00000033)
 }

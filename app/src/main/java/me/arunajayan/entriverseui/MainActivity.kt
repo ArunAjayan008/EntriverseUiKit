@@ -83,11 +83,12 @@ fun SetAppTheme(onClick: () -> Unit, userLocale: UserLocale) {
     }
 
     EntriverseTheme(darkTheme = darkTheme, userLocale = locale) {
-        Surface(modifier = Modifier.fillMaxSize()) {
+        Surface(modifier = Modifier.fillMaxSize().background(Entriverse.colors.materialColors.surface)
+          ) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Entriverse.colors.referenceColors.primaryText)
+                    .background(Entriverse.colors.materialColors.background)
                     .padding(top = 120.dp)
             ) {
                 Greeting(
@@ -110,11 +111,11 @@ fun Greeting(onClickTheme: () -> Unit, onClickLanguage: () -> Unit) {
         EvText(
             text = stringResource(R.string.infoText),
             modifier = Modifier.align(Alignment.CenterHorizontally),
-            color = Entriverse.colors.referenceColors.backgroundDefault,
+            color = Entriverse.colors.referenceColors.primaryText,
             style = Entriverse.typography.buttonText,
             fontSize = 20.sp
         )
-        Spacer(modifier = Modifier.height(50.dp))
+        Spacer(modifier = Modifier.height(10.dp))
         EvButton(
             modifier = Modifier,
             onClick = onClickTheme,
@@ -125,28 +126,78 @@ fun Greeting(onClickTheme: () -> Unit, onClickLanguage: () -> Unit) {
             icon = me.arunajayan.entriverselibrary.R.drawable.ev_button_icon,
             iconPosition = ButtonIconPosition.START
         )
-        Spacer(modifier = Modifier.height(50.dp))
+        Spacer(modifier = Modifier.height(10.dp))
+        EvButton(
+            modifier = Modifier,
+            onClick = onClickTheme,
+            disabled = false,
+            label = stringResource(R.string.change_theme),
+            type = ButtonType.TONAL,
+            size = ButtonSize.REGULAR,
+            icon = me.arunajayan.entriverselibrary.R.drawable.ev_button_icon,
+            iconPosition = ButtonIconPosition.START
+        )
+        Spacer(modifier = Modifier.height(10.dp))
+        EvButton(
+            modifier = Modifier,
+            onClick = onClickTheme,
+            disabled = false,
+            label = stringResource(R.string.change_theme),
+            type = ButtonType.OUTLINED,
+            size = ButtonSize.REGULAR,
+            icon = me.arunajayan.entriverselibrary.R.drawable.ev_button_icon,
+            iconPosition = ButtonIconPosition.START
+        )
+        Spacer(modifier = Modifier.height(10.dp))
+
+        EvButton(
+            modifier = Modifier,
+            onClick = {},
+            disabled = false,
+            label = stringResource(R.string.change_theme),
+            type = ButtonType.SECONDARY_OUTLINED,
+            size = ButtonSize.REGULAR,
+            icon = me.arunajayan.entriverselibrary.R.drawable.ev_button_icon,
+            iconPosition = ButtonIconPosition.START
+        )
+        Spacer(modifier = Modifier.height(10.dp))
+
+        EvButton(
+            modifier = Modifier,
+            onClick = {},
+            disabled = false,
+            label = stringResource(R.string.change_theme),
+            type = ButtonType.DESTRUCTIVE,
+            size = ButtonSize.SMALL,
+            icon = me.arunajayan.entriverselibrary.R.drawable.ev_button_icon,
+            iconPosition = ButtonIconPosition.START
+        )
+        Spacer(modifier = Modifier.height(10.dp))
+
+        EvButton(
+            modifier = Modifier,
+            onClick = {},
+            disabled = false,
+            label = stringResource(R.string.change_theme),
+            type = ButtonType.SUCCESS,
+            size = ButtonSize.SMALL,
+            icon = me.arunajayan.entriverselibrary.R.drawable.ev_button_icon,
+            iconPosition = ButtonIconPosition.START
+        )
+        Spacer(modifier = Modifier.height(10.dp))
+
         EvExtendedFAB(
             modifier = Modifier,
             onClick = onClickLanguage,
             label = stringResource(R.string.change_locale),
             expanded = true,
             icon = me.arunajayan.entriverselibrary.R.drawable.ev_button_icon,
-            buttonColor = Entriverse.palette.fabColor,
-            textColor = Entriverse.palette.brown800
         )
-        Spacer(modifier = Modifier.height(50.dp))
-        EvButton(
-            modifier = Modifier,
-            onClick = {},
-            disabled = false,
-            label = stringResource(R.string.change_theme),
-            type = ButtonType.TONAL,
-            size = ButtonSize.SMALL,
-            icon = me.arunajayan.entriverselibrary.R.drawable.ev_button_icon,
-            iconPosition = ButtonIconPosition.START
-        )
+
         var stateVal: Boolean? by remember {
+            mutableStateOf(null)
+        }
+        var emailValidation: Boolean? by remember {
             mutableStateOf(null)
         }
         var validation: Boolean? by remember {
@@ -160,26 +211,26 @@ fun Greeting(onClickTheme: () -> Unit, onClickLanguage: () -> Unit) {
 
         fun checkEmailValidation() {
             val emailRegex = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+".toRegex()
-            if (emailIdText.matches(emailRegex))
-                validation = true
-            else
-                validation = false
+            validation = if (emailIdText.isBlank()) {
+                null
+            } else {
+                emailIdText.matches(emailRegex)
+            }
         }
 
         fun saveEmail(email: String) {
             emailIdText = email
         }
-
+        Spacer(modifier = Modifier.height(30.dp))
         EvTextInputField(
             modifier = Modifier,
             onClick = { },
-            textColor = Entriverse.colors.referenceColors.placeholderText,
             leadingIcon = me.arunajayan.entriverselibrary.R.drawable.ev_ic_search,
             supportingText = when (validation) {
-                false -> "Input email address"
-                else -> ""
+                true -> "Success"
+                false -> "Invalid email id"
+                else -> "Enter email id"
             },
-            supportingTextColor = Entriverse.palette.red300,
             clearInputEnabled = true,
             validateState = validation,
             label = stringResource(id = R.string.email),
@@ -189,6 +240,24 @@ fun Greeting(onClickTheme: () -> Unit, onClickLanguage: () -> Unit) {
             },
             characterLimit = 5
         )
+        Spacer(Modifier.height(25.dp))
+        EvTextInputField(
+            modifier = Modifier,
+            onClick = { },
+            leadingIcon = me.arunajayan.entriverselibrary.R.drawable.ev_ic_search,
+            supportingText = when (validation) {
+                true -> "Success"
+                false -> "Invalid email id"
+                else -> "Enter email id"
+            },
+            clearInputEnabled = true,
+            validateState = emailValidation,
+            label = stringResource(id = R.string.email),
+            onValueChange = {
+            },
+            characterLimit = 5
+        )
+
     }
 }
 
