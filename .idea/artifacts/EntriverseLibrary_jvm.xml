@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="EntriverseLibrary-jvm">
-    <output-path>$PROJECT_DIR$/EntriverseLibrary/build/libs</output-path>
-    <root id="archive" name="EntriverseLibrary-jvm.jar">
-      <element id="module-output" name="Entriverse_UI.EntriverseLibrary.jvmMain" />
-    </root>
-  </artifact>
-</component>
