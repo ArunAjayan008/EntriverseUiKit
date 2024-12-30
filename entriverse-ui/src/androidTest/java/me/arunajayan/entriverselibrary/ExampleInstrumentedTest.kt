@@ -1,4 +1,4 @@
-package me.entri.entriverseui
+package me.entri.entriverselibrary
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("me.entri.entriverseui", appContext.packageName)
+        assertEquals("me.entri.entriverselibrary.test", appContext.packageName)
     }
 }

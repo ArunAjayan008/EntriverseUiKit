@@ -1,4 +1,4 @@
-package me.arunajayan.entriverseui.ui.theme
+package me.entri.entriverseui.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

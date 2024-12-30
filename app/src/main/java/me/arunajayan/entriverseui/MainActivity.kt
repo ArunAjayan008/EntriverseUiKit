@@ -1,4 +1,4 @@
-package me.arunajayan.entriverseui
+package me.entri.entriverseui
 
 import android.content.Context
 import android.content.res.Configuration
@@ -123,7 +123,7 @@ fun Greeting(onClickTheme: () -> Unit, onClickLanguage: () -> Unit) {
             label = stringResource(R.string.change_theme),
             type = ButtonType.FILLED,
             size = ButtonSize.REGULAR,
-            icon = me.arunajayan.entriverselibrary.R.drawable.ev_button_icon,
+            icon = R.drawable.ev_button_icon,
             iconPosition = ButtonIconPosition.START
         )
         Spacer(modifier = Modifier.height(10.dp))
@@ -134,7 +134,7 @@ fun Greeting(onClickTheme: () -> Unit, onClickLanguage: () -> Unit) {
             label = stringResource(R.string.change_theme),
             type = ButtonType.TONAL,
             size = ButtonSize.REGULAR,
-            icon = me.arunajayan.entriverselibrary.R.drawable.ev_button_icon,
+            icon = R.drawable.ev_button_icon,
             iconPosition = ButtonIconPosition.START
         )
         Spacer(modifier = Modifier.height(10.dp))
@@ -145,7 +145,7 @@ fun Greeting(onClickTheme: () -> Unit, onClickLanguage: () -> Unit) {
             label = stringResource(R.string.change_theme),
             type = ButtonType.OUTLINED,
             size = ButtonSize.REGULAR,
-            icon = me.arunajayan.entriverselibrary.R.drawable.ev_button_icon,
+            icon = R.drawable.ev_button_icon,
             iconPosition = ButtonIconPosition.START
         )
         Spacer(modifier = Modifier.height(10.dp))
@@ -157,7 +157,7 @@ fun Greeting(onClickTheme: () -> Unit, onClickLanguage: () -> Unit) {
             label = stringResource(R.string.change_theme),
             type = ButtonType.SECONDARY_OUTLINED,
             size = ButtonSize.REGULAR,
-            icon = me.arunajayan.entriverselibrary.R.drawable.ev_button_icon,
+            icon = R.drawable.ev_button_icon,
             iconPosition = ButtonIconPosition.START
         )
         Spacer(modifier = Modifier.height(10.dp))
@@ -169,7 +169,7 @@ fun Greeting(onClickTheme: () -> Unit, onClickLanguage: () -> Unit) {
             label = stringResource(R.string.change_theme),
             type = ButtonType.DESTRUCTIVE,
             size = ButtonSize.SMALL,
-            icon = me.arunajayan.entriverselibrary.R.drawable.ev_button_icon,
+            icon = R.drawable.ev_button_icon,
             iconPosition = ButtonIconPosition.START
         )
         Spacer(modifier = Modifier.height(10.dp))
@@ -181,7 +181,7 @@ fun Greeting(onClickTheme: () -> Unit, onClickLanguage: () -> Unit) {
             label = stringResource(R.string.change_theme),
             type = ButtonType.SUCCESS,
             size = ButtonSize.SMALL,
-            icon = me.arunajayan.entriverselibrary.R.drawable.ev_button_icon,
+            icon = R.drawable.ev_button_icon,
             iconPosition = ButtonIconPosition.START
         )
         Spacer(modifier = Modifier.height(10.dp))
@@ -191,7 +191,7 @@ fun Greeting(onClickTheme: () -> Unit, onClickLanguage: () -> Unit) {
             onClick = onClickLanguage,
             label = stringResource(R.string.change_locale),
             expanded = true,
-            icon = me.arunajayan.entriverselibrary.R.drawable.ev_button_icon,
+            icon = R.drawable.ev_button_icon,
         )
 
         var stateVal: Boolean? by remember {
@@ -225,7 +225,7 @@ fun Greeting(onClickTheme: () -> Unit, onClickLanguage: () -> Unit) {
         EvTextInputField(
             modifier = Modifier,
             onClick = { },
-            leadingIcon = me.arunajayan.entriverselibrary.R.drawable.ev_ic_search,
+            leadingIcon = R.drawable.ev_ic_search,
             supportingText = when (validation) {
                 true -> "Success"
                 false -> "Invalid email id"
@@ -244,7 +244,7 @@ fun Greeting(onClickTheme: () -> Unit, onClickLanguage: () -> Unit) {
         EvTextInputField(
             modifier = Modifier,
             onClick = { },
-            leadingIcon = me.arunajayan.entriverselibrary.R.drawable.ev_ic_search,
+            leadingIcon = R.drawable.ev_ic_search,
             supportingText = when (validation) {
                 true -> "Success"
                 false -> "Invalid email id"

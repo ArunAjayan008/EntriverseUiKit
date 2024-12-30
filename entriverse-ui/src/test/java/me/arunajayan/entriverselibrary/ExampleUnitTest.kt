@@ -1,4 +1,4 @@
-package me.entri.entriverseui
+package me.entri.entriverselibrary
 
 import org.junit.Test
 
