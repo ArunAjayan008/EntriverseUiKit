@@ -1,0 +1,3 @@
+[submodule "entriverse-ui"]
+	path = entriverse-ui
+	url = git@github.com:Entri-App/entriverse-ui.git
