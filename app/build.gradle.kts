@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "me.arunajayan.entriverseui"
+    namespace = "me.entri.entriverseui"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "me.arunajayan.entriverseui"
+        applicationId = "me.entri.entriverseui"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -72,6 +72,6 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation(libs.androidx.ui.test.manifest)
-    implementation(project(":EntriverseLibrary"))
+    implementation(project(":entriverse-ui"))
     //    implementation("com.github.ArunAjayan008:EntriverseUiKit:0.0.8")
 }

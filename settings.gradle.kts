@@ -28,4 +28,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Entriverse UI"
 include(":app")
-include(":EntriverseLibrary")
+include(":entriverse-ui")

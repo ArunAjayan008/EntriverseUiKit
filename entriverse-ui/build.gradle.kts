@@ -65,7 +65,7 @@ publishing {
 }
 
 android {
-    namespace = "me.arunajayan.entriverselibrary"
+    namespace = "me.entri.entriverseui"
     compileSdk = 34
 
     defaultConfig {

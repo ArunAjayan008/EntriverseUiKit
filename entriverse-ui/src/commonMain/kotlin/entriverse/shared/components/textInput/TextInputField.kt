@@ -28,7 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import entriverse.shared.Entriverse
 import entriverse.shared.components.EvText
-import me.arunajayan.entriverselibrary.R
+import me.entri.entriverseui.R
 
 @Composable
 fun EvTextInputField(

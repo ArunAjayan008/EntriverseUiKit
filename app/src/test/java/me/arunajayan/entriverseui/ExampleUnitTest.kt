@@ -1,4 +1,4 @@
-package me.arunajayan.entriverseui
+package me.entri.entriverseui
 
 import org.junit.Test
 

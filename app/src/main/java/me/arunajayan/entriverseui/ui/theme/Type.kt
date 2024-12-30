@@ -1,4 +1,4 @@
-package me.arunajayan.entriverseui.ui.theme
+package me.entri.entriverseui.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

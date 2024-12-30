@@ -16,7 +16,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
-import me.arunajayan.entriverselibrary.R
+import me.entri.entriverseui.R
 
 val interFamily = FontFamily(
     Font(R.font.inter_light, FontWeight.Light),

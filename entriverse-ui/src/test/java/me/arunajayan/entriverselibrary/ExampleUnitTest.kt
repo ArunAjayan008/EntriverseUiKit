@@ -1,4 +1,4 @@
-package me.arunajayan.entriverselibrary
+package me.entri.entriverselibrary
 
 import org.junit.Test
 
