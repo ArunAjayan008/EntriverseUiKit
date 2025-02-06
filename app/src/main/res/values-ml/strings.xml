@@ -5,6 +5,9 @@
     <string name="change_theme">തീം മാറ്റുക</string>
     <string name="change_locale">ഇംഗ്ലീഷിലേക്ക് മാറുക</string>
     <string name="email">ഇമെയിൽ</string>
+    <string name="labelText">ടെക്സ്റ്റ് നൽകുക</string>
     <string name="inputemail">ഇമെയിൽ വിലാസം നൽകുക</string>
     <string name="enter_name">പേര് നൽകുക</string>
+    <string name="card_title">ശീർഷകം ചേർക്കുക (പരമാവധി 2 വരികൾ പിന്തുണയ്ക്കുന്നു)</string>
+    <string name="subtitletext">ഉപശീർഷകം ചേർക്കുക (പരമാവധി 4 വരികൾ പിന്തുണയ്ക്കുന്നു) ഉപശീർഷകം ചേർക്കുക (പരമാവധി 4 വരികൾ പിന്തുണയ്ക്കുന്നു)</string>
 </resources>

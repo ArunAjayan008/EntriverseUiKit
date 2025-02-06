@@ -1,11 +1,14 @@
 <resources>
     <string name="app_name" translatable="false">Entriverse UI</string>
-    <string name="title_activity_main2" translatable="false">MainActivity2</string>
+    <string name="title_activity_main2" translatable="false">Entriverse Preview</string>
     <string name="infoText">Press the button</string>
     <string name="are_you_sure">Are you sure</string>
     <string name="change_theme">Change Theme</string>
     <string name="change_locale">Switch to Malayalam</string>
     <string name="email">Email</string>
+    <string name="labelText">Label Text</string>
     <string name="inputemail">Input email address</string>
     <string name="enter_name">Enter name</string>
+    <string name="card_title">Add Title here ( Maximum 2 lines supported )</string>
+    <string name="subtitletext">Add subtitle here ( Maximum 4 lines supported ) Add subtitle here ( Maximum 4 lines supported )</string>
 </resources>
