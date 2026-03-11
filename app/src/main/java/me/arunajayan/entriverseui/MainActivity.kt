@@ -7,9 +7,12 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -32,13 +35,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.edit
 import entriverse.shared.Entriverse
+import entriverse.shared.Entriverse.typography
 import entriverse.shared.components.EvText
 import entriverse.shared.components.button.ButtonIconPosition
 import entriverse.shared.components.button.ButtonSize
@@ -47,9 +52,23 @@ import entriverse.shared.components.button.EvButton
 import entriverse.shared.components.card.EvCard
 import entriverse.shared.components.card.EvCardType
 import entriverse.shared.components.extendedFab.EvExtendedFAB
+import entriverse.shared.components.selection.EvSelectionButton
+import entriverse.shared.components.selection.IconSize
+import entriverse.shared.components.selection.SelectionButtonState
 import entriverse.shared.components.textInput.EvTextInputField
+import entriverse.shared.composeResources.Res
+import entriverse.shared.composeResources.ev_button_icon
+import entriverse.shared.composeResources.ev_close_icon
+import entriverse.shared.composeResources.ev_ic_search
+import entriverse.shared.composeResources.ev_success_icon
 import entriverse.shared.theme.EntriverseTheme
 import entriverse.shared.theme.UserLocale
+import io.github.alexzhirkevich.compottie.Compottie
+import io.github.alexzhirkevich.compottie.DotLottie
+import io.github.alexzhirkevich.compottie.LottieCompositionSpec
+import io.github.alexzhirkevich.compottie.animateLottieCompositionAsState
+import io.github.alexzhirkevich.compottie.rememberLottieComposition
+import io.github.alexzhirkevich.compottie.rememberLottiePainter
 import java.util.Locale
 
 class MainActivity : ComponentActivity() {
@@ -83,12 +102,12 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun saveLanguageToPreferences(context: Context, language: UserLocale) {
-        val prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-        prefs.edit().putString("selected_language", language.toString()).apply()
+        val prefs = context.getSharedPreferences("app_prefs", MODE_PRIVATE)
+        prefs.edit { putString("selected_language", language.toString()) }
     }
 
     private fun getSavedLanguageFromPreferences(context: Context): UserLocale {
-        val prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        val prefs = context.getSharedPreferences("app_prefs", MODE_PRIVATE)
         return UserLocale.valueOf(
             prefs.getString("selected_language", UserLocale.EN.toString())
                 ?: UserLocale.EN.toString()
@@ -143,40 +162,66 @@ fun SetAppTheme(onClick: () -> Unit, userLocale: UserLocale) {
                     1 -> {
                         Column(modifier = Modifier.padding(10.dp)) {
                             Spacer(modifier = Modifier.height(20.dp))
+                            DotLottieThemingExample()
+                            Spacer(modifier = Modifier.height(20.dp))
                             EvButton(
-                                modifier = Modifier,
+                                buttonModifier = Modifier,
                                 onClick = {
                                     screenItem = 2
                                 },
                                 label = "BUTTONS",
                                 type = ButtonType.FILLED,
-                                size = ButtonSize.REGULAR
-                            )
+                                size = ButtonSize.REGULAR,
+                                contentDescription = "Buttons",
+
+                                )
                             Spacer(modifier = Modifier.height(20.dp))
                             EvButton(
-                                modifier = Modifier,
+                                buttonModifier = Modifier,
                                 onClick = { screenItem = 3 },
                                 label = "FAB",
                                 type = ButtonType.FILLED,
-                                size = ButtonSize.REGULAR
-                            )
+                                size = ButtonSize.REGULAR,
+                                contentDescription = "FAB",
+
+                                )
                             Spacer(modifier = Modifier.height(20.dp))
                             EvButton(
-                                modifier = Modifier,
+                                buttonModifier = Modifier,
                                 onClick = { screenItem = 4 },
 
                                 label = "TEXTBOX",
                                 type = ButtonType.FILLED,
-                                size = ButtonSize.REGULAR
+                                size = ButtonSize.REGULAR,
+                                contentDescription = "Textbox",
                             )
                             Spacer(modifier = Modifier.height(20.dp))
                             EvButton(
-                                modifier = Modifier,
+                                buttonModifier = Modifier,
                                 onClick = { screenItem = 5 },
 
                                 label = "CARD",
                                 type = ButtonType.FILLED,
-                                size = ButtonSize.REGULAR
+                                size = ButtonSize.REGULAR,
+                                contentDescription = "Card",
+                            )
+                            Spacer(modifier = Modifier.height(20.dp))
+                            EvButton(
+                                buttonModifier = Modifier,
+                                onClick = { screenItem = 6 },
+                                label = "TYPOGRAPHY",
+                                type = ButtonType.FILLED,
+                                size = ButtonSize.REGULAR,
+                                contentDescription = "Typography",
+                            )
+                            Spacer(modifier = Modifier.height(20.dp))
+                            EvButton(
+                                buttonModifier = Modifier,
+                                onClick = { screenItem = 7 },
+                                label = "SELECTION",
+                                type = ButtonType.FILLED,
+                                size = ButtonSize.REGULAR,
+                                contentDescription = "Selection",
                             )
                         }
                     }
@@ -193,10 +238,11 @@ fun SetAppTheme(onClick: () -> Unit, userLocale: UserLocale) {
                     }
 
                     3 -> {
-                        FAB(onClickLanguage = {
-                            setLangVal()
-                            onClick()
-                        },
+                        FAB(
+                            onClickLanguage = {
+                                setLangVal()
+                                onClick()
+                            },
                             onBackPressed = {
                                 screenItem = 1
                             })
@@ -210,6 +256,18 @@ fun SetAppTheme(onClick: () -> Unit, userLocale: UserLocale) {
 
                     5 -> {
                         EvCard(onBackPressed = {
+                            screenItem = 1
+                        })
+                    }
+
+                    6 -> {
+                        HeadingTypography(onBackPressed = {
+                            screenItem = 1
+                        })
+                    }
+
+                    7 -> {
+                        EvSelectionPreview(onBackPressed = {
                             screenItem = 1
                         })
                     }
@@ -239,8 +297,9 @@ fun Buttons(onClickTheme: () -> Unit, onBackPressed: () -> Unit) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 20.dp),
-                style = Entriverse.typography.buttonText,
-                fontSize = 20.sp
+                style = typography.buttonText,
+                fontSize = 20.sp,
+                contentDescription = "akjsfh"
             )
         }
 
@@ -255,93 +314,107 @@ fun Buttons(onClickTheme: () -> Unit, onBackPressed: () -> Unit) {
             )
             Spacer(modifier = Modifier.height(20.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = onClickTheme,
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.FILLED,
                 size = ButtonSize.REGULAR,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
-                iconPosition = ButtonIconPosition.START
-            )
+                icon = Res.drawable.ev_button_icon,
+                iconPosition = ButtonIconPosition.START,
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = onClickTheme,
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.TONAL,
                 size = ButtonSize.REGULAR,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
-                iconPosition = ButtonIconPosition.START
-            )
+                icon = Res.drawable.ev_button_icon,
+                iconPosition = ButtonIconPosition.START,
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = onClickTheme,
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.OUTLINED,
                 size = ButtonSize.REGULAR,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
-                iconPosition = ButtonIconPosition.START
-            )
+                icon = Res.drawable.ev_button_icon,
+                iconPosition = ButtonIconPosition.START,
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = {},
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.SECONDARY_OUTLINED,
                 size = ButtonSize.REGULAR,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
-                iconPosition = ButtonIconPosition.START
-            )
+                icon = Res.drawable.ev_button_icon,
+                iconPosition = ButtonIconPosition.START,
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = {},
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.DESTRUCTIVE,
                 size = ButtonSize.REGULAR,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
-                iconPosition = ButtonIconPosition.START
-            )
+                icon = Res.drawable.ev_button_icon,
+                iconPosition = ButtonIconPosition.START,
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = {},
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.SUCCESS,
                 size = ButtonSize.REGULAR,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
-                iconPosition = ButtonIconPosition.START
-            )
+                icon = Res.drawable.ev_button_icon,
+                iconPosition = ButtonIconPosition.START,
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = {},
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.TEXT,
                 size = ButtonSize.REGULAR,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
-                iconPosition = ButtonIconPosition.START
-            )
+                icon = Res.drawable.ev_button_icon,
+                iconPosition = ButtonIconPosition.START,
+                contentDescription = "Change Theme",
+
+                )
         }
 
 
@@ -349,148 +422,172 @@ fun Buttons(onClickTheme: () -> Unit, onBackPressed: () -> Unit) {
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = onClickTheme,
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.TONAL,
                 size = ButtonSize.REGULAR,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
-                iconPosition = ButtonIconPosition.END
-            )
+                icon = Res.drawable.ev_button_icon,
+                iconPosition = ButtonIconPosition.END,
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = onClickTheme,
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.OUTLINED,
                 size = ButtonSize.REGULAR,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
-                iconPosition = ButtonIconPosition.END
-            )
+                icon = Res.drawable.ev_button_icon,
+                iconPosition = ButtonIconPosition.END,
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = {},
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.SECONDARY_OUTLINED,
                 size = ButtonSize.REGULAR,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
-                iconPosition = ButtonIconPosition.END
-            )
+                icon = Res.drawable.ev_button_icon,
+                iconPosition = ButtonIconPosition.END,
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = {},
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.DESTRUCTIVE,
                 size = ButtonSize.REGULAR,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
-                iconPosition = ButtonIconPosition.END
-            )
+                icon = Res.drawable.ev_button_icon,
+                iconPosition = ButtonIconPosition.END,
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = {},
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.SUCCESS,
                 size = ButtonSize.REGULAR,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
-                iconPosition = ButtonIconPosition.END
-            )
+                icon = Res.drawable.ev_button_icon,
+                iconPosition = ButtonIconPosition.END,
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = {},
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.TEXT,
                 size = ButtonSize.REGULAR,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
-                iconPosition = ButtonIconPosition.END
-            )
+                icon = Res.drawable.ev_button_icon,
+                iconPosition = ButtonIconPosition.END,
+                contentDescription = "Change Theme",
+
+                )
         }
 
         //WITHOUT ICON
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = onClickTheme,
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.TONAL,
                 size = ButtonSize.REGULAR,
-            )
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = onClickTheme,
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.OUTLINED,
-                size = ButtonSize.REGULAR
-            )
+                size = ButtonSize.REGULAR,
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = {},
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.SECONDARY_OUTLINED,
-                size = ButtonSize.REGULAR
-            )
+                size = ButtonSize.REGULAR,
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = {},
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.DESTRUCTIVE,
-                size = ButtonSize.REGULAR
-            )
+                size = ButtonSize.REGULAR,
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = {},
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.SUCCESS,
                 size = ButtonSize.REGULAR,
-            )
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = {},
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.TEXT,
-                size = ButtonSize.REGULAR
-            )
+                size = ButtonSize.REGULAR,
+                contentDescription = "Change Theme",
+
+                )
         }
 
 
@@ -512,8 +609,9 @@ fun Buttons(onClickTheme: () -> Unit, onBackPressed: () -> Unit) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 20.dp),
-                style = Entriverse.typography.buttonText,
-                fontSize = 20.sp
+                style = typography.buttonText,
+                fontSize = 20.sp,
+                contentDescription = "akjsfh"
             )
         }
 
@@ -521,241 +619,279 @@ fun Buttons(onClickTheme: () -> Unit, onBackPressed: () -> Unit) {
         item {
             Spacer(modifier = Modifier.height(20.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = onClickTheme,
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.FILLED,
                 size = ButtonSize.SMALL,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
-                iconPosition = ButtonIconPosition.START
-            )
+                icon = Res.drawable.ev_button_icon,
+                iconPosition = ButtonIconPosition.START,
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = onClickTheme,
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.TONAL,
                 size = ButtonSize.SMALL,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
-                iconPosition = ButtonIconPosition.START
-            )
+                icon = Res.drawable.ev_button_icon,
+                iconPosition = ButtonIconPosition.START,
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = onClickTheme,
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.OUTLINED,
                 size = ButtonSize.SMALL,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
-                iconPosition = ButtonIconPosition.START
-            )
+                icon = Res.drawable.ev_button_icon,
+                iconPosition = ButtonIconPosition.START,
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = {},
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.SECONDARY_OUTLINED,
                 size = ButtonSize.SMALL,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
-                iconPosition = ButtonIconPosition.START
-            )
+                icon = Res.drawable.ev_button_icon,
+                iconPosition = ButtonIconPosition.START,
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = {},
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.DESTRUCTIVE,
                 size = ButtonSize.SMALL,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
-                iconPosition = ButtonIconPosition.START
-            )
+                icon = Res.drawable.ev_button_icon,
+                iconPosition = ButtonIconPosition.START,
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = {},
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.SUCCESS,
                 size = ButtonSize.SMALL,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
-                iconPosition = ButtonIconPosition.START
-            )
+                icon = Res.drawable.ev_button_icon,
+                iconPosition = ButtonIconPosition.START,
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = {},
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.TEXT,
                 size = ButtonSize.SMALL,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
-                iconPosition = ButtonIconPosition.START
-            )
+                icon = Res.drawable.ev_button_icon,
+                iconPosition = ButtonIconPosition.START,
+                contentDescription = "Change Theme",
+
+                )
         }
 
         //ICON END
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = onClickTheme,
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.TONAL,
                 size = ButtonSize.SMALL,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
-                iconPosition = ButtonIconPosition.END
-            )
+                icon = Res.drawable.ev_button_icon,
+                iconPosition = ButtonIconPosition.END,
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = onClickTheme,
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.OUTLINED,
                 size = ButtonSize.SMALL,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
-                iconPosition = ButtonIconPosition.END
-            )
+                icon = Res.drawable.ev_button_icon,
+                iconPosition = ButtonIconPosition.END,
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = {},
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.SECONDARY_OUTLINED,
                 size = ButtonSize.SMALL,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
-                iconPosition = ButtonIconPosition.END
-            )
+                icon = Res.drawable.ev_button_icon,
+                iconPosition = ButtonIconPosition.END,
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = {},
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.DESTRUCTIVE,
                 size = ButtonSize.SMALL,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
-                iconPosition = ButtonIconPosition.END
-            )
+                icon = Res.drawable.ev_button_icon,
+                iconPosition = ButtonIconPosition.END,
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = {},
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.SUCCESS,
                 size = ButtonSize.SMALL,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
-                iconPosition = ButtonIconPosition.END
-            )
+                icon = Res.drawable.ev_button_icon,
+                iconPosition = ButtonIconPosition.END,
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = {},
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.TEXT,
                 size = ButtonSize.SMALL,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
-                iconPosition = ButtonIconPosition.END
-            )
+                icon = Res.drawable.ev_button_icon,
+                iconPosition = ButtonIconPosition.END,
+                contentDescription = "Change Theme",
+
+                )
         }
 
         //WITHOUT ICON
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = onClickTheme,
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.TONAL,
                 size = ButtonSize.SMALL,
-            )
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = onClickTheme,
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.OUTLINED,
                 size = ButtonSize.SMALL,
-            )
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = {},
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.SECONDARY_OUTLINED,
                 size = ButtonSize.SMALL,
-            )
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = {},
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.DESTRUCTIVE,
                 size = ButtonSize.SMALL,
-            )
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = {},
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.SUCCESS,
                 size = ButtonSize.SMALL,
-            )
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = {},
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.TEXT,
                 size = ButtonSize.SMALL,
-            )
+                contentDescription = "Change Theme",
+
+                )
         }
 
 
@@ -777,8 +913,9 @@ fun Buttons(onClickTheme: () -> Unit, onBackPressed: () -> Unit) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 20.dp),
-                style = Entriverse.typography.buttonText,
-                fontSize = 20.sp
+                style = typography.buttonText,
+                fontSize = 20.sp,
+                contentDescription = "akjsfh"
             )
         }
 
@@ -786,241 +923,279 @@ fun Buttons(onClickTheme: () -> Unit, onBackPressed: () -> Unit) {
         item {
             Spacer(modifier = Modifier.height(20.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = onClickTheme,
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.FILLED,
                 size = ButtonSize.EXTRA_SMALL,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
-                iconPosition = ButtonIconPosition.START
-            )
+                icon = Res.drawable.ev_button_icon,
+                iconPosition = ButtonIconPosition.START,
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = onClickTheme,
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.TONAL,
                 size = ButtonSize.EXTRA_SMALL,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
-                iconPosition = ButtonIconPosition.START
-            )
+                icon = Res.drawable.ev_button_icon,
+                iconPosition = ButtonIconPosition.START,
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = onClickTheme,
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.OUTLINED,
                 size = ButtonSize.EXTRA_SMALL,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
-                iconPosition = ButtonIconPosition.START
-            )
+                icon = Res.drawable.ev_button_icon,
+                iconPosition = ButtonIconPosition.START,
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = {},
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.SECONDARY_OUTLINED,
                 size = ButtonSize.EXTRA_SMALL,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
-                iconPosition = ButtonIconPosition.START
-            )
+                icon = Res.drawable.ev_button_icon,
+                iconPosition = ButtonIconPosition.START,
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = {},
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.DESTRUCTIVE,
                 size = ButtonSize.EXTRA_SMALL,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
-                iconPosition = ButtonIconPosition.START
-            )
+                icon = Res.drawable.ev_button_icon,
+                iconPosition = ButtonIconPosition.START,
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = {},
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.SUCCESS,
                 size = ButtonSize.EXTRA_SMALL,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
-                iconPosition = ButtonIconPosition.START
-            )
+                icon = Res.drawable.ev_button_icon,
+                iconPosition = ButtonIconPosition.START,
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = {},
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.TEXT,
                 size = ButtonSize.EXTRA_SMALL,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
-                iconPosition = ButtonIconPosition.START
-            )
+                icon = Res.drawable.ev_button_icon,
+                iconPosition = ButtonIconPosition.START,
+                contentDescription = "Change Theme",
+
+                )
         }
 
         //ICON END
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = onClickTheme,
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.TONAL,
                 size = ButtonSize.EXTRA_SMALL,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
-                iconPosition = ButtonIconPosition.END
-            )
+                icon = Res.drawable.ev_button_icon,
+                iconPosition = ButtonIconPosition.END,
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = onClickTheme,
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.OUTLINED,
                 size = ButtonSize.EXTRA_SMALL,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
-                iconPosition = ButtonIconPosition.END
-            )
+                icon = Res.drawable.ev_button_icon,
+                iconPosition = ButtonIconPosition.END,
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = {},
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.SECONDARY_OUTLINED,
                 size = ButtonSize.EXTRA_SMALL,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
-                iconPosition = ButtonIconPosition.END
-            )
+                icon = Res.drawable.ev_button_icon,
+                iconPosition = ButtonIconPosition.END,
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = {},
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.DESTRUCTIVE,
                 size = ButtonSize.EXTRA_SMALL,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
-                iconPosition = ButtonIconPosition.END
-            )
+                icon = Res.drawable.ev_button_icon,
+                iconPosition = ButtonIconPosition.END,
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = {},
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.SUCCESS,
                 size = ButtonSize.EXTRA_SMALL,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
-                iconPosition = ButtonIconPosition.END
-            )
+                icon = Res.drawable.ev_button_icon,
+                iconPosition = ButtonIconPosition.END,
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = {},
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.TEXT,
                 size = ButtonSize.EXTRA_SMALL,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
-                iconPosition = ButtonIconPosition.END
-            )
+                icon = Res.drawable.ev_button_icon,
+                iconPosition = ButtonIconPosition.END,
+                contentDescription = "Change Theme",
+
+                )
         }
 
         //WITHOUT ICON
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = onClickTheme,
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.TONAL,
                 size = ButtonSize.EXTRA_SMALL,
-            )
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = onClickTheme,
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.OUTLINED,
                 size = ButtonSize.EXTRA_SMALL,
-            )
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = {},
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.SECONDARY_OUTLINED,
                 size = ButtonSize.EXTRA_SMALL,
-            )
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = {},
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.DESTRUCTIVE,
-                size = ButtonSize.EXTRA_SMALL
-            )
+                size = ButtonSize.EXTRA_SMALL,
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = {},
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.SUCCESS,
                 size = ButtonSize.EXTRA_SMALL,
-            )
+                contentDescription = "Change Theme",
+
+                )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvButton(
-                modifier = Modifier,
+                buttonModifier = Modifier,
                 onClick = {},
-                disabled = false,
+                enabled = true,
                 label = stringResource(R.string.change_theme),
                 type = ButtonType.TEXT,
-                size = ButtonSize.EXTRA_SMALL
-            )
+                size = ButtonSize.EXTRA_SMALL,
+                contentDescription = "Change Theme",
+
+                )
         }
     }
 }
@@ -1045,8 +1220,9 @@ fun FAB(onBackPressed: () -> Unit, onClickLanguage: () -> Unit) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 20.dp),
-                style = Entriverse.typography.buttonText,
-                fontSize = 20.sp
+                style = typography.buttonText,
+                fontSize = 20.sp,
+                contentDescription = "akjsfh"
             )
         }
 
@@ -1056,20 +1232,23 @@ fun FAB(onBackPressed: () -> Unit, onClickLanguage: () -> Unit) {
                 modifier = Modifier,
                 onClick = onClickLanguage,
                 expanded = false,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
+                icon = Res.drawable.ev_button_icon,
+                contentDescription = "FAB"
             )
             EvExtendedFAB(
                 modifier = Modifier,
                 onClick = onClickLanguage,
                 label = stringResource(R.string.change_locale),
                 expanded = true,
-                icon = me.entri.entriverseui.R.drawable.ev_button_icon,
+                icon = Res.drawable.ev_button_icon,
+                contentDescription = "FAB"
             )
             EvExtendedFAB(
                 modifier = Modifier,
                 onClick = onClickLanguage,
                 label = stringResource(R.string.change_locale),
                 expanded = true,
+                contentDescription = "FAB"
             )
         }
     }
@@ -1119,29 +1298,29 @@ fun TextField(onBackPressed: () -> Unit) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 20.dp),
-                style = Entriverse.typography.buttonText,
-                fontSize = 20.sp
+                style = typography.buttonText,
+                fontSize = 20.sp,
+                contentDescription = "akjsfh"
             )
         }
         item {
             Spacer(modifier = Modifier.height(10.dp))
             EvTextInputField(
-                modifier = Modifier,
                 onClick = { },
-                leadingIcon = me.entri.entriverseui.R.drawable.ev_ic_search,
+                leadingIcon = Res.drawable.ev_ic_search,
                 supportingTextValue = when (validation) {
                     true -> "Success"
                     false -> "Invalid email id"
                     else -> "Enter email id"
                 },
-                clearInputEnabled = true,
                 validateState = validation,
                 label = stringResource(id = R.string.email),
                 onValueChange = {
                     saveEmail(it)
                     checkEmailValidation()
                 },
-                characterLimit = 5
+                characterLimit = 5,
+                contentDescription = "Text Output Field"
             )
         }
         item {
@@ -1150,18 +1329,18 @@ fun TextField(onBackPressed: () -> Unit) {
                 modifier = Modifier,
                 onClick = { },
                 isEnabled = true,
-                leadingIcon = me.entri.entriverseui.R.drawable.ev_ic_search,
+                leadingIcon = Res.drawable.ev_ic_search,
                 supportingTextValue = when (validation) {
                     true -> "Success"
                     false -> "Invalid email id"
                     else -> "Enter email id"
                 },
-                clearInputEnabled = true,
                 validateState = emailValidation,
                 label = stringResource(id = R.string.email),
                 onValueChange = {
                 },
-                characterLimit = 5
+                characterLimit = 5,
+                contentDescription = "Text Output Field"
             )
         }
 
@@ -1171,7 +1350,7 @@ fun TextField(onBackPressed: () -> Unit) {
                 modifier = Modifier,
                 onClick = { },
                 isEnabled = false,
-                leadingIcon = me.entri.entriverseui.R.drawable.ev_ic_search,
+                leadingIcon = Res.drawable.ev_ic_search,
                 supportingTextValue = when (validation) {
                     true -> "Success"
                     false -> "Invalid email id"
@@ -1180,7 +1359,9 @@ fun TextField(onBackPressed: () -> Unit) {
                 label = stringResource(id = R.string.email),
                 onValueChange = {
                 },
-                characterLimit = 5
+                inputValue = "asdfkjahsjfkh",
+                characterLimit = 5,
+                contentDescription = "Text Output Field"
             )
         }
 
@@ -1190,10 +1371,10 @@ fun TextField(onBackPressed: () -> Unit) {
             EvTextInputField(
                 modifier = Modifier,
                 onClick = { },
-                clearInputEnabled = false,
                 label = stringResource(id = R.string.email),
                 onValueChange = {
                 },
+                contentDescription = "Text Output Field"
             )
         }
         item {
@@ -1202,10 +1383,10 @@ fun TextField(onBackPressed: () -> Unit) {
                 modifier = Modifier,
                 onClick = { },
                 isEnabled = false,
-                clearInputEnabled = false,
                 label = stringResource(id = R.string.email),
                 onValueChange = {
                 },
+                contentDescription = "Text Output Field"
             )
         }
 
@@ -1214,11 +1395,11 @@ fun TextField(onBackPressed: () -> Unit) {
             EvTextInputField(
                 modifier = Modifier,
                 onClick = { },
-                clearInputEnabled = false,
                 singleLine = false,
                 label = stringResource(id = R.string.email),
                 onValueChange = {
                 },
+                contentDescription = "Text Output Field"
             )
         }
         item {
@@ -1228,11 +1409,11 @@ fun TextField(onBackPressed: () -> Unit) {
                 onClick = { },
                 isEnabled = false,
                 singleLine = false,
-                clearInputEnabled = false,
                 validateState = emailValidation,
                 label = stringResource(id = R.string.email),
                 onValueChange = {
                 },
+                contentDescription = "Text Output Field"
             )
         }
     }
@@ -1258,8 +1439,9 @@ fun EvCard(onBackPressed: () -> Unit) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 20.dp),
-                style = Entriverse.typography.buttonText,
-                fontSize = 20.sp
+                style = typography.buttonText,
+                fontSize = 20.sp,
+                contentDescription = "akjsfh"
             )
         }
 
@@ -1269,13 +1451,14 @@ fun EvCard(onBackPressed: () -> Unit) {
                 parentModifier = Modifier,
                 titleText = stringResource(R.string.card_title),
                 subTitleText = stringResource(R.string.subtitletext),
-                cardIcon = R.drawable.ic_card,
+                cardIcon = Res.drawable.ev_close_icon,
                 isImageCard = false,
                 primaryCta = "CTA Text",
                 secondaryCta = "Dismiss",
-                primaryCtaIcon = R.drawable.ic_share,
+                primaryCtaIcon = Res.drawable.ev_button_icon,
                 cardType = EvCardType.PRIMARY,
-                onCardClicked = {}
+                onCardClicked = {},
+                contentDescription = "EvCard"
             )
             Spacer(modifier = Modifier.height(10.dp))
 
@@ -1287,9 +1470,10 @@ fun EvCard(onBackPressed: () -> Unit) {
                 isImageCard = true,
                 primaryCta = "CTA Text",
                 secondaryCta = "Dismiss",
-                primaryCtaIcon = R.drawable.ic_share,
+                primaryCtaIcon = Res.drawable.ev_ic_search,
                 cardType = EvCardType.SECONDARY,
-                onCardClicked = {}
+                onCardClicked = {},
+                contentDescription = "EvCard"
             )
 
             Spacer(modifier = Modifier.height(10.dp))
@@ -1297,13 +1481,14 @@ fun EvCard(onBackPressed: () -> Unit) {
                 parentModifier = Modifier,
                 titleText = stringResource(R.string.card_title),
                 subTitleText = stringResource(R.string.subtitletext),
-                cardIcon = R.drawable.ic_card,
+                cardIcon = Res.drawable.ev_button_icon,
                 isImageCard = false,
                 primaryCta = "CTA Text",
                 secondaryCta = "Dismiss",
-                primaryCtaIcon = R.drawable.ic_share,
+                primaryCtaIcon = Res.drawable.ev_button_icon,
                 cardType = EvCardType.GOLD,
-                onCardClicked = {}
+                onCardClicked = {},
+                contentDescription = "EvCard"
             )
 
             Spacer(modifier = Modifier.height(10.dp))
@@ -1315,9 +1500,10 @@ fun EvCard(onBackPressed: () -> Unit) {
                 isImageCard = true,
                 primaryCta = "CTA Text",
                 secondaryCta = "Dismiss",
-                primaryCtaIcon = R.drawable.ic_share,
+                primaryCtaIcon = Res.drawable.ev_close_icon,
                 cardType = EvCardType.BLUE,
-                onCardClicked = {}
+                onCardClicked = {},
+                contentDescription = "EvCard"
             )
 
             Spacer(modifier = Modifier.height(10.dp))
@@ -1329,9 +1515,10 @@ fun EvCard(onBackPressed: () -> Unit) {
                 isImageCard = true,
                 primaryCta = "CTA Text",
                 secondaryCta = "Dismiss",
-                primaryCtaIcon = R.drawable.ic_share,
+                primaryCtaIcon = Res.drawable.ev_button_icon,
                 cardType = EvCardType.PURPLE,
-                onCardClicked = {}
+                onCardClicked = {},
+                contentDescription = "EvCard"
             )
 
             Spacer(modifier = Modifier.height(10.dp))
@@ -1339,13 +1526,14 @@ fun EvCard(onBackPressed: () -> Unit) {
                 parentModifier = Modifier,
                 titleText = stringResource(R.string.card_title),
                 subTitleText = stringResource(R.string.subtitletext),
-                cardIcon = R.drawable.ic_card,
+                cardIcon = Res.drawable.ev_button_icon,
                 isImageCard = false,
                 primaryCta = "CTA Text",
                 secondaryCta = "Dismiss",
-                primaryCtaIcon = R.drawable.ic_share,
+                primaryCtaIcon = Res.drawable.ev_close_icon,
                 cardType = EvCardType.ORANGE,
-                onCardClicked = {}
+                onCardClicked = {},
+                contentDescription = "EvCard"
             )
 
             Spacer(modifier = Modifier.height(10.dp))
@@ -1353,13 +1541,14 @@ fun EvCard(onBackPressed: () -> Unit) {
                 parentModifier = Modifier,
                 titleText = stringResource(R.string.card_title),
                 subTitleText = stringResource(R.string.subtitletext),
-                cardIcon = R.drawable.ic_card,
+                cardIcon = Res.drawable.ev_button_icon,
                 isImageCard = false,
                 primaryCta = "CTA Text",
                 secondaryCta = "Dismiss",
-                primaryCtaIcon = R.drawable.ic_share,
+                primaryCtaIcon = Res.drawable.ev_success_icon,
                 cardType = EvCardType.YELLOW,
-                onCardClicked = {}
+                onCardClicked = {},
+                contentDescription = "EvCard"
             )
 
             Spacer(modifier = Modifier.height(10.dp))
@@ -1367,13 +1556,14 @@ fun EvCard(onBackPressed: () -> Unit) {
                 parentModifier = Modifier,
                 titleText = stringResource(R.string.card_title),
                 subTitleText = stringResource(R.string.subtitletext),
-                cardIcon = R.drawable.ic_card,
+                cardIcon = Res.drawable.ev_close_icon,
                 isImageCard = false,
                 primaryCta = "CTA Text",
                 secondaryCta = "Dismiss",
-                primaryCtaIcon = R.drawable.ic_share,
+                primaryCtaIcon = Res.drawable.ev_button_icon,
                 cardType = EvCardType.BROWN,
-                onCardClicked = {}
+                onCardClicked = {},
+                contentDescription = "EvCard"
             )
 
             Spacer(modifier = Modifier.height(10.dp))
@@ -1381,13 +1571,14 @@ fun EvCard(onBackPressed: () -> Unit) {
                 parentModifier = Modifier,
                 titleText = stringResource(R.string.card_title),
                 subTitleText = stringResource(R.string.subtitletext),
-                cardIcon = R.drawable.ic_card,
+                cardIcon = Res.drawable.ev_close_icon,
                 isImageCard = false,
                 primaryCta = "CTA Text",
                 secondaryCta = "Dismiss",
-                primaryCtaIcon = R.drawable.ic_share,
+                primaryCtaIcon = Res.drawable.ev_close_icon,
                 cardType = EvCardType.SUCCESS,
-                onCardClicked = {}
+                onCardClicked = {},
+                contentDescription = "EvCard"
             )
 
             Spacer(modifier = Modifier.height(10.dp))
@@ -1395,27 +1586,193 @@ fun EvCard(onBackPressed: () -> Unit) {
                 parentModifier = Modifier,
                 titleText = stringResource(R.string.card_title),
                 subTitleText = stringResource(R.string.subtitletext),
-                cardIcon = R.drawable.ic_card,
+                cardIcon = Res.drawable.ev_close_icon,
                 isImageCard = false,
                 primaryCta = "CTA Text",
                 secondaryCta = "Dismiss",
-                primaryCtaIcon = R.drawable.ic_share,
+                primaryCtaIcon = Res.drawable.ev_success_icon,
                 cardType = EvCardType.WARNING_ERROR,
-                onCardClicked = {}
+                onCardClicked = {},
+                contentDescription = "EvCard"
             )
         }
     }
 }
 
-@Preview(showSystemUi = true)
 @Composable
-fun GreetingPreview() {
-    EntriverseTheme(darkTheme = false) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
+fun HeadingTypography(onBackPressed: () -> Unit) {
+    BackHandler(enabled = true) {
+        onBackPressed()
+    }
+    EntriverseTheme {
+        Surface {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                EvText(
+                    text = "Heading S - Regular",
+                    style = typography.headingSRegular,
+                    contentDescription = "Heading S - Regular"
+                )
+                EvText(
+                    text = "Heading S - Bold",
+                    style = typography.headingSBold,
+                    contentDescription = "Heading S - Bold"
+                )
+                EvText(
+                    text = "Heading L - Regular",
+                    style = typography.headingLRegular,
+                    contentDescription = "Heading L - Regular"
+                )
+                EvText(
+                    text = "Heading L - Bold",
+                    style = typography.headingLBold,
+                    contentDescription = "Heading L - Bold"
+                )
+                EvText(
+                    text = "Heading XL - Regular",
+                    style = typography.headingXLRegular,
+                    contentDescription = "Heading XL - Regular"
+                )
+                EvText(
+                    text = "Heading XL - Bold",
+                    style = typography.headingXLBold,
+                    contentDescription = "Heading XL - Bold"
+                )
+                EvText(
+                    text = "Display S - Regular",
+                    style = typography.displaySRegular,
+                    contentDescription = "Display S - Regular"
+                )
+                EvText(
+                    text = "Display S - Bold",
+                    style = typography.displaySBold,
+                    contentDescription = "Display S - Bold"
+                )
+                EvText(
+                    text = "Display L - Regular",
+                    style = typography.displayLRegular,
+                    contentDescription = "Display L - Regular"
+                )
+                EvText(
+                    text = "Display L - Bold",
+                    style = typography.displayLBold,
+                    contentDescription = "Display L - Bold"
+                )
+                EvText(
+                    text = "Display XL - Regular",
+                    style = typography.displayXLRegular,
+                    contentDescription = "Display XL - Regular"
+                )
+                EvText(
+                    text = "Display XL - Bold",
+                    style = typography.displayXLBold,
+                    contentDescription = "Display XL - Bold"
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun EvSelectionPreview(onBackPressed: () -> Unit) {
+
+    BackHandler(enabled = true) {
+        onBackPressed()
+    }
+    EntriverseTheme {
+        Column(modifier = Modifier.padding(20.dp)) {
+            EvSelectionButton(
+                label = "Active State",
+                buttonState = SelectionButtonState.ActiveEnabled(
+                    icon = Res.drawable.ev_button_icon,
+                    iconSize = IconSize.Size24
+                ),
+                onClick = {},
+                contentDescription = "EvSelectionActive"
+            )
+            Spacer(Modifier.height(20.dp))
+            EvSelectionButton(
+                label = "Inactive State",
+                buttonState = SelectionButtonState.InactiveEnabled(),
+                onClick = {},
+                contentDescription = "EvSelectionInactive"
+            )
+            Spacer(Modifier.height(20.dp))
+            EvSelectionButton(
+                label = "Disabled State",
+                buttonState = SelectionButtonState.InactiveDisabled(),
+                onClick = {},
+                contentDescription = "EvSelectionDisabled"
+            )
+            Spacer(Modifier.height(20.dp))
+            EvSelectionButton(
+                label = "Disabled State",
+                buttonState = SelectionButtonState.Gold(),
+                onClick = {},
+                contentDescription = "EvSelectionDisabled"
+            )
+            Spacer(Modifier.height(20.dp))
+            EvSelectionButton(
+                label = "Disabled State",
+                buttonState = SelectionButtonState.ActiveDisabled(),
+                onClick = {},
+                contentDescription = "EvSelectionDisabled"
+            )
+        }
+    }
+}
+
+//private val dotLottieThemes = listOf("sunset", "night", "midnight", "day", "winter")
+private val dotLottieThemes = listOf("Dark", "Light")
+
+@Composable
+private fun DotLottieThemingExample() {
+    val context = LocalContext.current
+    var selectedTheme by remember { mutableStateOf(dotLottieThemes.first()) }
+
+    val composition by rememberLottieComposition {
+        LottieCompositionSpec.DotLottie(
+            context.assets.open("theme2.lottie").readBytes()
+        )
+    }
+
+    val progress by animateLottieCompositionAsState(
+        composition = composition,
+        iterations = Compottie.IterateForever
+    )
+
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Image(
+            painter = rememberLottiePainter(
+                composition = composition,
+                progress = { progress },
+                theme = selectedTheme
+            ),
+            contentDescription = "DotLottie themed animation",
+            modifier = Modifier.size(200.dp)
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(6.dp),
+            modifier = Modifier.fillMaxWidth()
         ) {
-            FAB(onBackPressed = {}, onClickLanguage = {})
+            dotLottieThemes.forEach { theme ->
+                EvButton(
+                    buttonModifier = Modifier.weight(1f),
+                    onClick = { selectedTheme = theme },
+                    label = theme.replaceFirstChar { it.uppercase() },
+                    type = if (selectedTheme == theme) ButtonType.FILLED else ButtonType.OUTLINED,
+                    size = ButtonSize.SMALL,
+                    contentDescription = theme
+                )
+            }
         }
     }
 }

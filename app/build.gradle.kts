@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace = "me.arunajayan.entriverseui"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "me.arunajayan.entriverseui"
         minSdk = 23
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -35,8 +35,10 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-    kotlinOptions {
-        jvmTarget = "1.8"
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_1_8)
+        }
     }
 
     packaging {
@@ -68,4 +70,6 @@ dependencies {
     debugImplementation(libs.compose.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation(project(":entriverse-ui"))
+    implementation(libs.compottie)
+    implementation(libs.compottie.dot)
 }
